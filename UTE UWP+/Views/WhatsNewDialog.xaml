@@ -27,7 +27,7 @@ Style="{StaticResource PivotTitleContentControlStyle}">
     <ScrollViewer>
         <StackPanel>
             <TextBlock TextWrapping="WrapWholeWords">
-              • Fix Superscript/Subscript icons
+              Initial release of UltraTextEdit UWP Plus to the Stable Channel
             </TextBlock>
         </StackPanel>
     </ScrollViewer>
