@@ -27,7 +27,9 @@ Style="{StaticResource PivotTitleContentControlStyle}">
     <ScrollViewer>
         <StackPanel>
             <TextBlock TextWrapping="WrapWholeWords">
-              Initial release of UltraTextEdit UWP Plus to the Stable Channel
+              - Retarget the app onto the Windows 11, version 24H2 SDK<LineBreak/>
+              - Drop support for the ARM32 architecture<LineBreak/>
+              - Dependency updates
             </TextBlock>
         </StackPanel>
     </ScrollViewer>
