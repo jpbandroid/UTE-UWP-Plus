@@ -17,6 +17,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using UTE_UWP_;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -83,6 +84,9 @@ namespace UTE_UWP_
         }
 
         public static MainWindow Window { get; private set; }
+
+        public static WindowEx MainWindow { get; } = new MainWindow();
+
 
         public static IntPtr WindowHandle { get; private set; }
     }

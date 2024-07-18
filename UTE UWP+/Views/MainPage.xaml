@@ -7,8 +7,8 @@
     xmlns:local="using:UTE_UWP_"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    xmlns:ToolkitControls="using:CommunityToolkit.WinUI.UI.Controls"
+    
     mc:Ignorable="d"
     xmlns:appmodel="using:Windows.ApplicationModel" xmlns:diags="using:UltraTextEdit_UWP.UserControls"
     d:DesignHeight="564"
@@ -1976,7 +1976,7 @@ ToolTipService.ToolTip="Compute Hash">
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="containerPanel"
-            muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+            
             Background="Transparent"
             PaneBackground="Transparent"
             IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="24" DisplayMode="Inline" PanePlacement="Right" x:Name="textsplitview">
@@ -2009,7 +2009,7 @@ ToolTipService.ToolTip="Compute Hash">
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="containerPanel"
-            muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+            
             Background="Transparent"
             PaneBackground="Transparent"
             IsPaneOpen="False" OpenPaneLength="256" CompactPaneLength="24" DisplayMode="Inline" PanePlacement="Left" x:Name="commentsplitview">
@@ -2092,7 +2092,7 @@ ToolTipService.ToolTip="Compute Hash">
                     <Border x:Name="HomeAccentBackground" BorderThickness="0,0,0,0" Visibility="{Binding Visibility, ElementName=AccentBackground}">
                         <Border.Background>
 
-                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.35" FallbackColor="{ThemeResource SystemAccentColor}"/>
+                            <AcrylicBrush  TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.35" FallbackColor="{ThemeResource SystemAccentColor}"/>
                         </Border.Background>
                     </Border>
                     <Border BorderThickness="0,1,0,0" Height="135" Background="{ThemeResource SystemControlBackgroundAltMediumLowBrush}" BorderBrush="#338A8A8A" VerticalAlignment="Bottom"/>

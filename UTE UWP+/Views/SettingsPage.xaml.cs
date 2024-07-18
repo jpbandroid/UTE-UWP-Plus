@@ -1,4 +1,4 @@
-﻿using MicaForUWP.Media;
+﻿
 using Microsoft.Graphics.Canvas.Text;
 using System;
 using System.Collections.Generic;

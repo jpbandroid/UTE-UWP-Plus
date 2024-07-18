@@ -1,4 +1,5 @@
-<Window
+<winuiex:WindowEx
+    xmlns:winuiex="using:WinUIEx"
     x:Class="UTE_UWP_.MainWindow"
     xmlns:local="using:UTE_UWP_"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -40,4 +41,4 @@
 
     </Grid>
 
-</Window>
+</winuiex:WindowEx>

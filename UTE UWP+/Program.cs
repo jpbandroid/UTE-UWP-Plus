@@ -11,7 +11,7 @@ namespace UTE_UWP_
         // which prevents the build system from generating the default Main method:
         // static void Main(string[] args)
         // {
-        //     global::Windows.UI.Xaml.Application.Start((p) => new App());
+        //     global::Microsoft.UI.Xaml.Application.Start((p) => new App());
         // }
         // TODO: Update the logic in this method if you want to control the launching of multiple instances.
         // You may find the `AppInstance.GetActivatedEventArgs()` useful for your app-defined logic.
@@ -35,7 +35,7 @@ namespace UTE_UWP_
                 if (instance.IsCurrentInstance)
                 {
                     // If successfully registered this instance, do normal XAML initialization.
-                    global::Windows.UI.Xaml.Application.Start((p) => new App());
+                    global::Microsoft.UI.Xaml.Application.Start((p) => new App());
                 }
                 else
                 {
