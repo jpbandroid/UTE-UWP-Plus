@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTE UWP+", "UTE UWP+\UTE UWP+.csproj", "{73B4987B-140D-4D2E-92C6-EA7A290D146C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTE UWP+", "UTE UWP+\UTE UWP+.csproj", "{73B4987B-140D-4D2E-92C6-EA7A290D146C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTE UWP+.Core", "UTE UWP+.Core\UTE UWP+.Core.csproj", "{19C9189B-7CEE-43BD-8E96-DA3CADB91BC0}"
 EndProject

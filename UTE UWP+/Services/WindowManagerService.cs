@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace UTE_UWP_.Services
 {
@@ -26,14 +26,16 @@ namespace UTE_UWP_.Services
 
         public int MainViewId { get; private set; }
 
-        public CoreDispatcher MainDispatcher { get; private set; }
+        public // TODO Windows.UI.Core.CoreDispatcher is not longer supported. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/threading
+CoreDispatcher MainDispatcher { get; private set; }
 
         public async Task InitializeAsync()
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 MainViewId = ApplicationView.GetForCurrentView().Id;
-                MainDispatcher = Window.Current.Dispatcher;
+                MainDispatcher = App.Window.Dispatcher;
             });
         }
 
@@ -44,6 +46,7 @@ namespace UTE_UWP_.Services
             ViewLifetimeControl viewControl = await CreateViewLifetimeControlAsync(windowTitle, pageType);
             SecondaryViews.Add(viewControl);
             viewControl.StartViewInUse();
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             await ApplicationViewSwitcher.TryShowAsStandaloneAsync(viewControl.Id, ViewSizePreference.Default, ApplicationView.GetForCurrentView().Id, ViewSizePreference.Default);
             viewControl.StopViewInUse();
             return viewControl;
@@ -72,8 +75,9 @@ namespace UTE_UWP_.Services
                 var frame = new Frame();
                 frame.RequestedTheme = ThemeSelectorService.Theme;
                 frame.Navigate(pageType, viewControl);
-                Window.Current.Content = frame;
-                Window.Current.Activate();
+                App.Window.Content = frame;
+                App.Window.Activate();
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 ApplicationView.GetForCurrentView().Title = viewControl.Title;
             });
 

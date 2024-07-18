@@ -18,10 +18,10 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace UTE_UWP_.Views
 {
@@ -222,7 +222,7 @@ namespace UTE_UWP_.Views
 
         private void VIDsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Window.Current.Content is Frame rootFrame)
+            if (App.Window.Content is Frame rootFrame)
             {
                 rootFrame.Navigate(typeof(VelocityIDsPage));
             }

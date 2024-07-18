@@ -1,182 +1,89 @@
-﻿using System;
-
-using UTE_UWP_.Services;
-using UTE_UWP_.Helpers;
-
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Windows.AppLifecycle;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using UTE_UWP_;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace UTE_UWP_
 {
-    public sealed partial class App : Application
+    /// <summary>
+    /// Provides application-specific behavior to supplement the default Application class.
+    /// </summary>
+    public partial class App : Application
     {
-        private Lazy<ActivationService> _activationService;
-
-        private ActivationService ActivationService
-        {
-            get { return _activationService.Value; }
-        }
-
+        /// <summary>
+        /// Initializes the singleton application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// </summary>
         public App()
         {
-            InitializeComponent();
-            UnhandledException += OnAppUnhandledException;
-
-
-            // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
-            _activationService = new Lazy<ActivationService>(CreateActivationService);
+            this.InitializeComponent();
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        /// <summary>
+        /// Invoked when the application is launched normally by the end user.  Other entry points
+        /// will be used such as when the application is launched to open a specific file.
+        /// </summary>
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
         {
-            ConfigureUIResources();
-            var LocalSettings = ApplicationData.Current.LocalSettings;
-            if (LocalSettings.Values["NewRibbon"] == null)
-            {
-                LocalSettings.Values["NewRibbon"] = "Off";
-            }
-            if (LocalSettings.Values["AccentTheme"] == null) {
-                LocalSettings.Values["AccentTheme"] = "Default";
-            }
-            if ((string)LocalSettings.Values["AccentTheme"] == "Slate Green")
-            {
-                var brush = new SolidColorBrush(Color.FromArgb(255, 92, 255, 138));
-                Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorDark1"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorDark2"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorDark3"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorLight1"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorLight2"] = Color.FromArgb(255, 92, 255, 138);
-                Application.Current.Resources["SystemAccentColorLight3"] = Color.FromArgb(255, 92, 255, 138);
-            }
-            if ((string)LocalSettings.Values["AccentTheme"] == "Lilac")
-            {
-                var brush = new SolidColorBrush(Color.FromArgb(255, 0x89, 0x61, 0xCC));
-                Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 0x89, 0x81, 0xCC);
-                Application.Current.Resources["SystemAccentColorDark1"] = Color.FromArgb(255, 0x98, 0x75, 0xD4);
-                Application.Current.Resources["SystemAccentColorDark2"] = Color.FromArgb(255, 0xA7, 0x88, 0xDD);
-                Application.Current.Resources["SystemAccentColorDark3"] = Color.FromArgb(255, 0xB7, 0x9C, 0xE5);
-                Application.Current.Resources["SystemAccentColorLight1"] = Color.FromArgb(255, 0x77, 0x52, 0xBA);
-                Application.Current.Resources["SystemAccentColorLight2"] = Color.FromArgb(255, 0x65, 0x43, 0xA9);
-                Application.Current.Resources["SystemAccentColorLight3"] = Color.FromArgb(255, 0xA7, 0x88, 0xDD);
-            }
-            if ((string)LocalSettings.Values["AccentTheme"] == "Crimson")
-            {
-                var brush = new SolidColorBrush(Color.FromArgb(255, 0x89, 0x61, 0xCC));
-                Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 0xD1, 0x34, 0x38);
-                Application.Current.Resources["SystemAccentColorDark1"] = Color.FromArgb(255, 0xD9, 0x4D, 0x50);
-                Application.Current.Resources["SystemAccentColorDark2"] = Color.FromArgb(255, 0xE1, 0x65, 0x68);
-                Application.Current.Resources["SystemAccentColorDark3"] = Color.FromArgb(255, 0xE9, 0x7E, 0x81);
-                Application.Current.Resources["SystemAccentColorLight1"] = Color.FromArgb(255, 0xBE, 0x2A, 0x2D);
-                Application.Current.Resources["SystemAccentColorLight2"] = Color.FromArgb(255, 0xAB, 0x1F, 0x22);
-                Application.Current.Resources["SystemAccentColorLight3"] = Color.FromArgb(255, 0x99, 0x15, 0x16);
-            }
-            if ((string)LocalSettings.Values["AccentTheme"] == "Blue")
-            {
-                var brush = new SolidColorBrush(Color.FromArgb(255, 0x89, 0x61, 0xCC));
-                Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 0x00, 0x73, 0xCF);
-                Application.Current.Resources["SystemAccentColorDark1"] = Color.FromArgb(255, 0x1D, 0x85, 0xD7);
-                Application.Current.Resources["SystemAccentColorDark2"] = Color.FromArgb(255, 0x3B, 0x97, 0xDF);
-                Application.Current.Resources["SystemAccentColorDark3"] = Color.FromArgb(255, 0x58, 0xA8, 0xE8);
-                Application.Current.Resources["SystemAccentColorLight1"] = Color.FromArgb(255, 0x00, 0x64, 0xBE);
-                Application.Current.Resources["SystemAccentColorLight2"] = Color.FromArgb(255, 0x00, 0x55, 0xAD);
-                Application.Current.Resources["SystemAccentColorLight3"] = Color.FromArgb(255, 0x00, 0x45, 0x9D);
-            }
-            if ((string)LocalSettings.Values["AccentTheme"] == "Seafoam")
-            {
-                var brush = new SolidColorBrush(Color.FromArgb(255, 0x89, 0x61, 0xCC));
-                Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 0x00, 0xB7, 0xC3);
-                Application.Current.Resources["SystemAccentColorDark1"] = Color.FromArgb(255, 0x1C, 0xC1, 0xCC);
-                Application.Current.Resources["SystemAccentColorDark2"] = Color.FromArgb(255, 0x38, 0xCA, 0xD4);
-                Application.Current.Resources["SystemAccentColorDark3"] = Color.FromArgb(255, 0x54, 0xD4, 0xDD);
-                Application.Current.Resources["SystemAccentColorLight1"] = Color.FromArgb(255, 0x00, 0xA4, 0xB0);
-                Application.Current.Resources["SystemAccentColorLight2"] = Color.FromArgb(255, 0x00, 0x90, 0x9D);
-                Application.Current.Resources["SystemAccentColorLight3"] = Color.FromArgb(255, 0x00, 0x7D, 0x89);
-            }
-            if (!args.PrelaunchActivated)
-            {
-                await ActivationService.ActivateAsync(args);
-                
-            }
-        }
+            // TODO This code defaults the app to a single instance app. If you need multi instance app, remove this part.
+            // Read: https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/applifecycle#single-instancing-in-applicationonlaunched
+            // If this is the first instance launched, then register it as the "main" instance.
+            // If this isn't the first instance launched, then "main" will already be registered,
+            // so retrieve it.
+            var mainInstance = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey("main");
+            var activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
-        private void ConfigureUIResources()
-        {
-            if (SettingsHelper.GetSettingString("Core.UI") == null)
+            // If the instance that's executing the OnLaunched handler right now
+            // isn't the "main" instance.
+            if (!mainInstance.IsCurrent)
             {
-                SettingsHelper.SetSetting("Core.UI", "WinUI");
-            }
-            if (SettingsHelper.GetSettingString("Core.Theme") == "Acrylic Glass")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/AcrylicGlassUI.xaml");
-                Application.Current.Resources.MergedDictionaries.Add(res);
-                Application.Current.FocusVisualKind = FocusVisualKind.DottedLine;
+                // Redirect the activation (and args) to the "main" instance, and exit.
+                await mainInstance.RedirectActivationToAsync(activatedEventArgs);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
                 return;
             }
-            if (SettingsHelper.GetSettingString("Core.Theme") == "Win32 Light")
+
+            // TODO This code handles app activation types. Add any other activation kinds you want to handle.
+            // Read: https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/applifecycle#file-type-association
+            if (activatedEventArgs.Kind == ExtendedActivationKind.File)
             {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/Win32 Light.xaml");
-                Application.Current.Resources.MergedDictionaries.Add(res);
-                Application.Current.FocusVisualKind = FocusVisualKind.DottedLine;
-                return;
+                OnFileActivated(activatedEventArgs);
             }
-            if (SettingsHelper.GetSettingString("Core.Theme") == "Win32 Dark")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/Win32 Dark.xaml");
-                Application.Current.Resources.MergedDictionaries.Add(res);
-                Application.Current.FocusVisualKind = FocusVisualKind.DottedLine;
-                return;
-            }
-            if (SettingsHelper.GetSettingString("Core.UI") == "WinUI")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/WinUI.xaml");
-                Application.Current.FocusVisualKind = FocusVisualKind.HighVisibility;
-                Application.Current.Resources.MergedDictionaries.Add(res);
-            }
-            if (SettingsHelper.GetSettingString("Core.UI") == "CrimsonUI")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/CrimsonUI.xaml");
-                Application.Current.FocusVisualKind = FocusVisualKind.Reveal;
-                Application.Current.Resources.MergedDictionaries.Add(res);
-            }
-            if (SettingsHelper.GetSettingString("Core.UI") == "10 Light")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/10 Light.xaml");
-                Application.Current.FocusVisualKind = FocusVisualKind.HighVisibility;
-                Application.Current.Resources.MergedDictionaries.Add(res);
-            }
-            if (SettingsHelper.GetSettingString("Core.UI") == "10 Dark")
-            {
-                var res = new ResourceDictionary();
-                res.Source = new Uri("ms-appx:///UI/10 Dark.xaml");
-                Application.Current.FocusVisualKind = FocusVisualKind.HighVisibility;
-                Application.Current.Resources.MergedDictionaries.Add(res);
-            }
+
+            // Initialize MainWindow here
+            Window = new MainWindow();
+            Window.Activate();
+            WindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(Window);
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
+        // TODO This is an example method for the case when app is activated through a file.
+        // Feel free to remove this if you do not need this.
+        public void OnFileActivated(AppActivationArguments activatedEventArgs)
         {
-            await ActivationService.ActivateAsync(args);
+
         }
 
-        private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            // TODO: Please log and handle the exception as appropriate to your scenario
-            // For more info see https://docs.microsoft.com/uwp/api/windows.ui.xaml.application.unhandledexception
-        }
+        public static MainWindow Window { get; private set; }
 
-        private ActivationService CreateActivationService()
-        {
-            return new ActivationService(this, typeof(Views.MainPage));
-        }
+        public static IntPtr WindowHandle { get; private set; }
     }
 }

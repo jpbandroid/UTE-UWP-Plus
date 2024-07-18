@@ -10,13 +10,13 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -35,7 +35,7 @@ namespace UTE_UWP_.Views
 
             if (BuildInfo.BeforeWin11)
             {
-                if (App.Current.RequestedTheme == ApplicationTheme.Light)
+                if (App.Window.RequestedTheme == ApplicationTheme.Light)
                 {
                     Application.Current.Resources["AppTitleBarBrush"] = new BackdropMicaBrush()
                     {
@@ -62,6 +62,7 @@ namespace UTE_UWP_.Views
                     this.Background = (Brush)Application.Current.Resources["AppTitleBarBrush"];
                 }
 
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 var appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 
                 appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -71,7 +72,7 @@ namespace UTE_UWP_.Views
                 coreTitleBar.ExtendViewIntoTitleBar = true;
                 UpdateTitleBarLayout(coreTitleBar);
 
-                Window.Current.SetTitleBar(AppTitleBar);
+                App.Window.SetTitleBar(AppTitleBar);
 
                 coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
                 coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
@@ -116,7 +117,7 @@ namespace UTE_UWP_.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Window.Current.Content is Frame rootFrame && rootFrame.CanGoBack)
+            if (App.Window.Content is Frame rootFrame && rootFrame.CanGoBack)
             {
                 rootFrame.GoBack();
             }

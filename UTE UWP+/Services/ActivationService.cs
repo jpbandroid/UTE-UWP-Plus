@@ -8,10 +8,10 @@ using UTE_UWP_.Core.Helpers;
 using UTE_UWP_.Services;
 
 using Windows.ApplicationModel.Activation;
-using Windows.System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.Windows.System;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace UTE_UWP_.Services
 {
@@ -46,10 +46,10 @@ namespace UTE_UWP_.Services
 
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
-                if (Window.Current.Content == null)
+                if (App.Window.Content == null)
                 {
                     // Create a Shell or Frame to act as the navigation context
-                    Window.Current.Content = _shell?.Value ?? new Frame();
+                    App.Window.Content = _shell?.Value ?? new Frame();
                     NavigationService.NavigationFailed += (sender, e) =>
                     {
                         throw e.Exception;
@@ -65,7 +65,7 @@ namespace UTE_UWP_.Services
             if (IsInteractive(activationArgs))
             {
                 // Ensure the current window is active
-                Window.Current.Activate();
+                App.Window.Activate();
 
                 // Tasks after activation
                 await StartupAsync();

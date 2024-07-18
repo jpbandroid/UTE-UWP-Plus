@@ -23,18 +23,17 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.Storage.Streams;
-using Windows.System;
+using Microsoft.Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
-using Windows.UI.Text;
+using Microsoft.UI.Text;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Markup;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using SplitButton = Microsoft.UI.Xaml.Controls.SplitButton;
 namespace UTE_UWP_.Views
 {
@@ -57,7 +56,7 @@ namespace UTE_UWP_.Views
 
             if (BuildInfo.BeforeWin11)
             {
-                if (App.Current.RequestedTheme == ApplicationTheme.Light)
+                if (App.Window.RequestedTheme == ApplicationTheme.Light)
                 {
                     Application.Current.Resources["AppTitleBarBrush"] = new BackdropMicaBrush()
                     {
@@ -94,6 +93,7 @@ namespace UTE_UWP_.Views
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             var appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
 
             appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -104,11 +104,11 @@ namespace UTE_UWP_.Views
             coreTitleBar.ExtendViewIntoTitleBar = true;
             UpdateTitleBarLayout(coreTitleBar);
 
-            Window.Current.SetTitleBar(AppTitleBar);
+            App.Window.SetTitleBar(AppTitleBar);
 
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
-            Window.Current.Activated += Current_Activated;
+            App.Window.Activated += Current_Activated;
 
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequest;
 
@@ -268,7 +268,11 @@ namespace UTE_UWP_.Views
             string fileName = AppTitle.Text.Replace(" - " + "UTE UWP", "");
             if (isCopy || fileName == "Untitled")
             {
-                FileSavePicker savePicker = new FileSavePicker();
+/*
+    TODO You should replace 'App.WindowHandle' with the your window's handle (HWND) 
+    Read more on retrieving window handle here: https://docs.microsoft.com/en-us/windows/apps/develop/ui-input/retrieve-hwnd
+*/
+                FileSavePicker savePicker = InitializeWithWindow(new FileSavePicker(),App.WindowHandle);
                 savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
                 // Dropdown of file types the user can save the file as
@@ -353,8 +357,15 @@ namespace UTE_UWP_.Views
             }
         }
 
+        private static FileSavePicker InitializeWithWindow(FileSavePicker obj, IntPtr windowHandle)
+        {
+            WinRT.Interop.InitializeWithWindow.Initialize(obj, windowHandle);
+            return obj;
+        }
+
         private async void Print_Click(object sender, RoutedEventArgs e)
         {
+            // TODO Windows.Graphics.Printing.PrintManager is not yet supported in WindowsAppSDK. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/what-is-supported
             if (PrintManager.IsSupported())
             {
                 try
@@ -371,7 +382,8 @@ namespace UTE_UWP_.Views
                         Content = "Sorry, printing can't proceed at this time.",
                         PrimaryButtonText = "OK"
                     };
-                    await noPrintingDialog.ShowAsync();
+                    /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+                    await SetContentDialogRoot(noPrintingDialog.ShowAsync,this);
                 }
             }
             else
@@ -383,8 +395,27 @@ namespace UTE_UWP_.Views
                     Content = "Sorry, printing is not supported on this device.",
                     PrimaryButtonText = "OK"
                 };
-                await noPrintingDialog.ShowAsync();
+                /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+                await SetContentDialogRoot(noPrintingDialog.ShowAsync,this);
             }
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private void BoldButton_Click(object sender, RoutedEventArgs e)
@@ -407,11 +438,13 @@ namespace UTE_UWP_.Views
 
         private async void NewDoc_Click(object sender, RoutedEventArgs e)
         {
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             ApplicationView currentAV = ApplicationView.GetForCurrentView();
             CoreApplicationView newAV = CoreApplication.CreateNewView();
             await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                var newWindow = Window.Current;
+                var newWindow = App.Window;
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = $"Untitled - UTE UWP+";
 
@@ -593,11 +626,15 @@ namespace UTE_UWP_.Views
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
+/*
+    TODO You should replace 'App.WindowHandle' with the your window's handle (HWND) 
+    Read more on retrieving window handle here: https://docs.microsoft.com/en-us/windows/apps/develop/ui-input/retrieve-hwnd
+*/
             // Open a text file.
-            FileOpenPicker open = new FileOpenPicker()
+            FileOpenPicker open = InitializeWithWindow(new FileOpenPicker()
             {
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
+            },App.WindowHandle);
 
             open.FileTypeFilter.Add(".rtf");
             open.FileTypeFilter.Add(".txt");
@@ -627,10 +664,20 @@ namespace UTE_UWP_.Views
             }
         }
 
+        private static FileOpenPicker InitializeWithWindow(FileOpenPicker obj, IntPtr windowHandle)
+        {
+            WinRT.Interop.InitializeWithWindow.Initialize(obj, windowHandle);
+            return obj;
+        }
+
         private async void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
+/*
+    TODO You should replace 'App.WindowHandle' with the your window's handle (HWND) 
+    Read more on retrieving window handle here: https://docs.microsoft.com/en-us/windows/apps/develop/ui-input/retrieve-hwnd
+*/
             // Open an image file.
-            FileOpenPicker open = new FileOpenPicker();
+            FileOpenPicker open = InitializeWithWindow(new FileOpenPicker(),App.WindowHandle);
             open.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             open.FileTypeFilter.Add(".png");
             open.FileTypeFilter.Add(".jpg");
@@ -662,6 +709,12 @@ namespace UTE_UWP_.Views
                 // Insert an image
                 editor.Document.Selection.InsertImage(width, height, 0, VerticalCharacterAlignment.Baseline, "Image", randAccStream);
             }
+        }
+
+        private static FileOpenPicker InitializeWithWindow(FileOpenPicker obj, IntPtr windowHandle)
+        {
+            WinRT.Interop.InitializeWithWindow.Initialize(obj, windowHandle);
+            return obj;
         }
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
@@ -747,15 +800,27 @@ namespace UTE_UWP_.Views
 
             aboutDialog.CloseButtonClick += (s, e) => this._openDialog = false;
 
-            ContentDialogResult result = await aboutDialog.ShowAsync();
+            /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+
+            ContentDialogResult result = await SetContentDialogRoot(aboutDialog.ShowAsync,this);
             if (result == ContentDialogResult.Primary)
             {
                 SaveFile(true);
             }
             else if (result == ContentDialogResult.Secondary)
             {
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 await ApplicationView.GetForCurrentView().TryConsolidateAsync();
             }
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private async void AboutBtn_Click(object sender, RoutedEventArgs e)
@@ -817,6 +882,7 @@ namespace UTE_UWP_.Views
         {
             if (saved)
             {
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 await ApplicationView.GetForCurrentView().TryConsolidateAsync();
             }
             else await ShowUnsavedDialog();
@@ -873,7 +939,7 @@ namespace UTE_UWP_.Views
             /*SettingsDialog dlg = new(editor, FontsCombo, this);
             await dlg.ShowAsync();*/
 
-            if (Window.Current.Content is Frame rootFrame)
+            if (App.Window.Content is Frame rootFrame)
             {
                 rootFrame.Navigate(typeof(SettingsPageContainer));
             }
@@ -1019,7 +1085,7 @@ namespace UTE_UWP_.Views
         private void ShareButton_Click(object sender, RoutedEventArgs e)
         {
             ShareSourceLoad();
-            DataTransferManager.ShowShareUI();
+            Windows.ApplicationModel.DataTransfer.DataTransferManager.As<UWPToWinAppSDKUpgradeHelpers.IDataTransferManagerInterop>().ShowShareUIForWindow(App.WindowHandle);
         }
 
         private void CommentsButton_Click(object sender, RoutedEventArgs e)
@@ -1113,11 +1179,13 @@ namespace UTE_UWP_.Views
 
         private async void NewInstance_Click(object sender, RoutedEventArgs e)
         {
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             ApplicationView currentAV = ApplicationView.GetForCurrentView();
             CoreApplicationView newAV = CoreApplication.CreateNewView();
             await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                var newWindow = Window.Current;
+                var newWindow = App.Window;
+                // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = $"Untitled - UTE UWP+";
 
@@ -1175,7 +1243,19 @@ namespace UTE_UWP_.Views
             dialog.SecondaryButtonText = "Cancel";
 
             // Show the ContentDialog
-            await dialog.ShowAsync();
+            /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+
+            // Show the ContentDialog
+            await SetContentDialogRoot(dialog.ShowAsync,this);
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private async void fr_invoke(object sender, RoutedEventArgs e)
@@ -1670,7 +1750,19 @@ namespace UTE_UWP_.Views
             dialog.SecondaryButtonText = "Cancel";
 
             // Show the ContentDialog
-            await dialog.ShowAsync();
+            /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+
+            // Show the ContentDialog
+            await SetContentDialogRoot(dialog.ShowAsync,this);
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private void ComputeHash_Click(object sender, RoutedEventArgs e)
@@ -1681,7 +1773,17 @@ namespace UTE_UWP_.Views
             dialog.Content = new ComputeHash();
             dialog.CloseButtonText = "Close";
             dialog.DefaultButton = ContentDialogButton.Close;
-            dialog.ShowAsync();
+            /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+            SetContentDialogRoot(            dialog.ShowAsync,this);
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private async void Button_Click_24(object sender, RoutedEventArgs e)
@@ -1714,7 +1816,9 @@ namespace UTE_UWP_.Views
 
             aboutDialog.CloseButtonClick += (s, e) => this._openDialog = false;
 
-            ContentDialogResult result = await aboutDialog.ShowAsync();
+            /* TODO You should replace 'this' with the instance of UserControl that this ContentDialog is meant to be a part of. */
+
+            ContentDialogResult result = await SetContentDialogRoot(aboutDialog.ShowAsync,this);
             if (result == ContentDialogResult.Primary)
             {
                 SaveFile(true);
@@ -1725,6 +1829,15 @@ namespace UTE_UWP_.Views
                 AppTitle.Text = "Untitled" + " - " + "UTE UWP+";
                 fileNameWithPath = "";
             }
+        }
+
+         private static ContentDialog SetContentDialogRoot(ContentDialog contentDialog, UserControl control)
+         {
+            if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+            {
+                contentDialog.XamlRoot = control.Content.XamlRoot;
+            }
+            return contentDialog;
         }
 
         private async void InsertBlank(object sender, RoutedEventArgs e)

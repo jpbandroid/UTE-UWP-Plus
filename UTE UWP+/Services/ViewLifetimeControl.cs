@@ -4,6 +4,7 @@ using UTE_UWP_.Helpers;
 
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Microsoft.UI.Windowing;
 
 namespace UTE_UWP_.Services
 {
@@ -25,7 +26,8 @@ namespace UTE_UWP_.Services
         private event ViewReleasedHandler InternalReleased;
 
         // Necessary to communicate with the window
-        public CoreDispatcher Dispatcher { get; private set; }
+        public // TODO Windows.UI.Core.CoreDispatcher is not longer supported. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/threading
+CoreDispatcher Dispatcher { get; private set; }
 
         // This id is used in all of the ApplicationViewSwitcher and ProjectionManager APIs
         public int Id { get; private set; }
@@ -65,13 +67,14 @@ namespace UTE_UWP_.Services
         {
             Dispatcher = newWindow.Dispatcher;
             _window = newWindow;
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             Id = ApplicationView.GetApplicationViewIdForWindow(_window);
             RegisterForEvents();
         }
 
         public static ViewLifetimeControl CreateForCurrentView()
         {
-            return new ViewLifetimeControl(CoreWindow.GetForCurrentThread());
+            return new ViewLifetimeControl(AppWindow.Create());
         }
 
         // Signals that the view is being interacted with by another view,
@@ -128,15 +131,18 @@ namespace UTE_UWP_.Services
 
         private void RegisterForEvents()
         {
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             ApplicationView.GetForCurrentView().Consolidated += ViewConsolidated;
         }
 
         private void UnregisterForEvents()
         {
+            // TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
             ApplicationView.GetForCurrentView().Consolidated -= ViewConsolidated;
         }
 
-        private void ViewConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs e)
+        private void ViewConsolidated(// TODO Windows.UI.ViewManagement.ApplicationView is no longer supported. Use Microsoft.UI.Windowing.AppWindow instead. For more details see https://docs.microsoft.com/en-us/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/guides/windowing
+ApplicationView sender, ApplicationViewConsolidatedEventArgs e)
         {
             StopViewInUse();
         }

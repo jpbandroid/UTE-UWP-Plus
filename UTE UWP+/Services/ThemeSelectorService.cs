@@ -6,7 +6,7 @@ using UTE_UWP_.Helpers;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace UTE_UWP_.Services
 {
@@ -35,7 +35,7 @@ namespace UTE_UWP_.Services
             {
                 await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    if (Window.Current.Content is FrameworkElement frameworkElement)
+                    if (App.Window.Content is FrameworkElement frameworkElement)
                     {
                         frameworkElement.RequestedTheme = Theme;
                     }

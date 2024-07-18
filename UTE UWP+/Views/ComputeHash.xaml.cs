@@ -5,13 +5,13 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using UTE_UWP_.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,7 +30,7 @@ namespace UTE_UWP_.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainPage mainPage = (Window.Current.Content as Frame).Content as MainPage;
+            MainPage mainPage = (App.Window.Content as Frame).Content as MainPage;
             string docText = mainPage.docText;
             docText = EncryptorsDecryptors.Base64Encode(docText);
             base64_result.Text = docText;
@@ -38,7 +38,7 @@ namespace UTE_UWP_.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MainPage mainPage = (Window.Current.Content as Frame).Content as MainPage;
+            MainPage mainPage = (App.Window.Content as Frame).Content as MainPage;
             string docText = mainPage.docText;
             docText = EncryptorsDecryptors.Base64Decode(docText);
             base64_result.Text = docText;
@@ -46,7 +46,7 @@ namespace UTE_UWP_.Views
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            MainPage mainPage = (Window.Current.Content as Frame).Content as MainPage;
+            MainPage mainPage = (App.Window.Content as Frame).Content as MainPage;
             string docText = mainPage.docText;
             docText = EncryptorsDecryptors.SHA1Encrypt(docText);
             sha1_result.Text = docText;

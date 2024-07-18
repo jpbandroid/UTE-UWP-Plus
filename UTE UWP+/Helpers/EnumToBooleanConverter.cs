@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Windows.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 
 namespace UTE_UWP_.Helpers
 {

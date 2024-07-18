@@ -8,13 +8,13 @@ using UTE_UWP_.Helpers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,7 +31,7 @@ namespace UTE_UWP_.Views
 
             if (BuildInfo.BeforeWin11)
             {
-                if (App.Current.RequestedTheme == ApplicationTheme.Light)
+                if (App.Window.RequestedTheme == ApplicationTheme.Light)
                 {
                     Application.Current.Resources["AppTitleBarBrush"] = new BackdropMicaBrush()
                     {
@@ -86,7 +86,7 @@ namespace UTE_UWP_.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Window.Current.Content is Frame rootFrame && rootFrame.CanGoBack)
+            if (App.Window.Content is Frame rootFrame && rootFrame.CanGoBack)
             {
                 rootFrame.GoBack();
             }
