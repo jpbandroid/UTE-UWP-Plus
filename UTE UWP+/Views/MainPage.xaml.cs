@@ -23,6 +23,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
@@ -30,6 +31,7 @@ using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -118,6 +120,7 @@ namespace UTE_UWP_.Views
             Comments.Visibility = Visibility.Collapsed;
             Developer.Visibility = Visibility.Collapsed;
             Help.Visibility = Visibility.Collapsed;
+            HomeNav.SelectedItem = HomeNavItem;
 
             ShareSourceLoad();
 
@@ -165,8 +168,43 @@ namespace UTE_UWP_.Views
             }
             else
             {
-                LocalSettings.Values["NewRibbon"] = "Off";
-                ribbonToggle.IsOn = false;
+                LocalSettings.Values["NewRibbon"] = "On";
+                ButtonPanel.Visibility = Visibility.Collapsed;
+                Ribbon.Visibility = Visibility.Visible;
+                ribbonToggle.IsOn = true;
+                finditem.Visibility = Visibility.Visible;
+            }
+            if (LocalSettings.Values["SpellCheck"] != null)
+            {
+                if (LocalSettings.Values["SpellCheck"].ToString() == "On")
+                {
+                    editor.IsSpellCheckEnabled = true;
+                }
+                else
+                {
+                    editor.IsSpellCheckEnabled = false;
+                }
+            }
+            else
+            {
+                LocalSettings.Values["SpellCheck"] = "Off";
+            }
+            if (LocalSettings.Values["TextWrapping"] != null) {
+                if ((string)LocalSettings.Values["TextWrapping"] == "No wrap")
+                {
+                    editor.TextWrapping = TextWrapping.NoWrap;
+                }
+                if ((string)LocalSettings.Values["TextWrapping"] == "Wrap")
+                {
+                    editor.TextWrapping = TextWrapping.Wrap;
+                }
+                if ((string)LocalSettings.Values["TextWrapping"] == "Wrap whole words")
+                {
+                    editor.TextWrapping = TextWrapping.WrapWholeWords;
+                }
+            } else
+            {
+                LocalSettings.Values["TextWrapping"] = "Wrap whole words";
             }
         }
 
@@ -840,7 +878,7 @@ namespace UTE_UWP_.Views
 
             if (Window.Current.Content is Frame rootFrame)
             {
-                rootFrame.Navigate(typeof(SettingsPage));
+                rootFrame.Navigate(typeof(SettingsPageContainer));
             }
         }
 
@@ -913,11 +951,6 @@ namespace UTE_UWP_.Views
 
         }
 
-        private void showinsiderinfo(object sender, RoutedEventArgs e)
-        {
-            ToggleThemeTeachingTip1.IsOpen = true;
-        }
-
         private void OnKeyboardAcceleratorInvoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             switch (sender.Key)
@@ -986,7 +1019,7 @@ namespace UTE_UWP_.Views
             request.Data.SetText(editor.TextDocument.ToString());
         }
 
-        private void Shaeditorutton_Click(object sender, RoutedEventArgs e)
+        private void ShareButton_Click(object sender, RoutedEventArgs e)
         {
             ShareSourceLoad();
             DataTransferManager.ShowShareUI();
@@ -1074,7 +1107,7 @@ namespace UTE_UWP_.Views
             var myDocument = editor.Document;
             string oldText;
             myDocument.GetText(TextGetOptions.None, out oldText);
-            myDocument.SetText(TextSetOptions.None, oldText + text);
+            editor.Document.Selection.Text = text;
 
             symbolbut.Flyout.Hide();
             Symbols_Insert.Flyout.Hide();
@@ -1462,12 +1495,6 @@ namespace UTE_UWP_.Views
 
         #endregion Find and Replace
 
-        private void ShareButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShareSourceLoad();
-            DataTransferManager.ShowShareUI();
-        }
-
         public List<string> fonts
         {
             get
@@ -1607,7 +1634,7 @@ namespace UTE_UWP_.Views
             dialog.Title = "Insert symbol";
 
             // Create a ListView for the user to select the date format
-            ListView listView = new ListView();
+            GridView listView = new GridView();
             listView.SelectionMode = ListViewSelectionMode.Single;
 
             // Create a list of date formats to display in the ListView
@@ -1623,6 +1650,16 @@ namespace UTE_UWP_.Views
             symbols.Add("α");
             symbols.Add("β");
             symbols.Add("γ");
+            symbols.Add("©️");
+            symbols.Add("®️");
+            symbols.Add("™️");
+            symbols.Add("±");
+            symbols.Add("℮");
+            symbols.Add("≠");
+            symbols.Add("≡");
+            symbols.Add("≈");
+            symbols.Add("≤");
+            symbols.Add("≥");
 
             // Set the ItemsSource of the ListView to the list of date formats
             listView.ItemsSource = symbols;
@@ -1703,7 +1740,7 @@ namespace UTE_UWP_.Views
             }
         }
 
-        private async void BlankFIle(object sender, RoutedEventArgs e)
+        private async void InsertBlank(object sender, RoutedEventArgs e)
         {
             await ShowUnsavedDialog2();
 
@@ -1841,21 +1878,6 @@ namespace UTE_UWP_.Views
             DeveloperButton.IsChecked = false;
             CommentsButton.IsChecked = false;
             HelpButton.IsChecked = true;
-        }
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_6(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_7(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ribbonToggle_Toggled(object sender, RoutedEventArgs e)
@@ -2217,6 +2239,150 @@ namespace UTE_UWP_.Views
             DeveloperButton.IsChecked = true;
             CommentsButton.IsChecked = false;
             HelpButton.IsChecked = false;
+        }
+
+        private void editor_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Space)
+            {
+                var text = GetPlainText(editor);
+                var sel = editor.Document.Selection;
+                if (text.Length <= 2)
+                {
+                    foreach (char i in "-*")
+                    {
+                        if (text.Contains(i) == true)
+                        {
+                            editor.Document.Selection.SetRange(0, 3);
+                            editor.Document.Selection.SetText(TextSetOptions.FormatRtf, string.Empty);
+                            editor.Document.Selection.ParagraphFormat.ListType = MarkerType.Bullet;
+                            SmartEditorHyphen.Visibility = Visibility.Visible;
+                        }
+                    }
+                }
+                else
+                {
+                    if (text.Substring(text.Length - 2, 2) is "\n-" or "\n*" or "\n-\n" or "\n*\n")
+                    {
+                        editor.Document.Selection.SetRange(sel.StartPosition - 1, sel.EndPosition);
+                        editor.Document.Selection.SetText(TextSetOptions.FormatRtf, "\n");
+                        editor.Document.Selection.ParagraphFormat.ListType = MarkerType.Bullet;
+                        SmartEditorHyphen.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
+
+        private void SmartEditorHyphen_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            SmartEditorHyphen.Content = "⚡ SmartEditor - Auto list";
+        }
+
+        private void SmartEditorHyphen_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            SmartEditorHyphen.Content = "⚡";
+        }
+
+        private void UndoList_Click(object sender, RoutedEventArgs e)
+        {
+            editor.Document.Undo();
+            editor.Document.Undo();
+            editor.Document.Undo();
+            editor.Document.Selection.SetRange(editor.Document.Selection.StartPosition + 1, editor.Document.Selection.EndPosition + 1);
+            editor.Document.Selection.SetText(TextSetOptions.FormatRtf, " ");
+            SmartEditorHyphen.Visibility = Visibility.Collapsed;
+        }
+
+        private void CloseSmartEditorAutoList_Click(object sender, RoutedEventArgs e)
+        {
+            SmartEditorHyphen.Visibility = Visibility.Collapsed;
+        }
+
+        public static string GetPlainText(RichEditBox RichEditor)
+        {
+            RichEditor.Document.GetText(TextGetOptions.UseCrlf, out string Text);
+            ITextRange Range = RichEditor.Document.GetRange(0, Text.Length);
+            Range.GetText(TextGetOptions.UseCrlf, out string Value);
+            return Value;
+        }
+
+        private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            if (HomePage.Visibility == Visibility.Visible)
+            {
+                if (HomeNav.SelectedItem != null)
+                {
+                    if (HomeNav.SelectedItem == HomeNavItem)
+                    {
+                        HomePanel.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        if (HomePanel != null)
+                        {
+                            HomePanel.Visibility = Visibility.Collapsed;
+                        }
+
+                    }
+                    if (HomeNav.SelectedItem == NewNavItem)
+                    {
+                        NewPanel.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        if (NewPanel != null)
+                        {
+                            NewPanel.Visibility = Visibility.Collapsed;
+                        }
+
+                    }
+                    if (HomeNav.SelectedItem == AccountNavItem)
+                    {
+                        UserText.Text = Environment.UserName;
+                        AccountsStackPanel.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        if (AccountsStackPanel != null)
+                        {
+                            AccountsStackPanel.Visibility = Visibility.Collapsed;
+                        }
+
+                    }
+                    if (args.IsSettingsSelected)
+                    {
+                        SettingsFrame.Navigate(typeof(SettingsPage));
+                        SettingsFrame.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        if (SettingsFrame != null)
+                        {
+                            SettingsFrame.Visibility = Visibility.Collapsed;
+                        }
+                    }
+
+                }
+                else
+                {
+                    HomeNav.SelectedItem = HomeNavItem;
+                }
+            }
+        }
+
+        private void ChangelogButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AboutItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_30(object sender, RoutedEventArgs e)
+        {
+            AboutBox.Close();
         }
     }
 }

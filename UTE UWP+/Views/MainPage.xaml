@@ -7,6 +7,7 @@
     xmlns:local="using:UTE_UWP_"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d"
     xmlns:appmodel="using:Windows.ApplicationModel" xmlns:diags="using:UltraTextEdit_UWP.UserControls"
@@ -14,213 +15,6 @@
     d:DesignWidth="876">
 
     <Page.Resources>
-        <Style x:Key="CrimsonToolbarToggleButton" TargetType="ToggleButton">
-            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
-            <Setter Property="Foreground" Value="{ThemeResource ToggleButtonForeground}" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-            <Setter Property="FocusVisualMargin" Value="-3" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
-                        <Grid x:Name="RootGrid" Background="Transparent" CornerRadius="4">
-
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal">
-
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="PointerOver">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Null}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="Pressed">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Null}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="8"/>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="Disabled">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                    <VisualState x:Name="Checked">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Null}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="28"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="CheckedPointerOver">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="32"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="CheckedPressed">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Null}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="24"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="CheckedDisabled">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundCheckedDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundCheckedDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushCheckedDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Indeterminate">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminate}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminate}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminate}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="IndeterminatePointerOver">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminatePointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminatePointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminatePointerOver}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="IndeterminatePressed">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminatePressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminatePressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminatePressed}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="IndeterminateDisabled">
-
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminateDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminateDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminateDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-
-                                </VisualStateGroup>
-
-                            </VisualStateManager.VisualStateGroups>
-
-                            <ContentPresenter x:Name="ContentPresenter"
-              Background="{TemplateBinding Background}"
-              BackgroundSizing="{TemplateBinding BackgroundSizing}"
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
-              Content="{TemplateBinding Content}"
-              ContentTemplate="{TemplateBinding ContentTemplate}"
-              ContentTransitions="{TemplateBinding ContentTransitions}"
-              CornerRadius="{TemplateBinding CornerRadius}"
-              Padding="{TemplateBinding Padding}"
-              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-              Margin="0, 0, 0, 2"
-              AutomationProperties.AccessibilityView="Raw"/>
-                            <Grid x:Name="Pipe"
-                Height="3" Width="0.1" CornerRadius="1.5,1.5,1.5,1.5"
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Center" Background="{StaticResource AccentFillColorDefaultBrush}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style x:Key="CrimsonToolbarContextualToggleButton" TargetType="ToggleButton">
             <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
             <Setter Property="Foreground" Value="{ThemeResource SystemAccentColor}" />
@@ -461,169 +255,6 @@
     <Grid>
         <RelativePanel Background="{StaticResource TabViewItemHeaderBackground}">
 
-            <Border x:Name="HomePage" Background="#59000000" d:IsHidden="True" Visibility="Collapsed" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Canvas.ZIndex="10">
-                <Border BorderBrush="#FF777777" BorderThickness="1" CornerRadius="8,8,8,8" MaxWidth="825" MaxHeight="775">
-                    <Grid x:FieldModifier="public" Background="{Binding Background, ElementName=PageTitleBar}">
-                        <Border x:Name="HomeAccentBackground" BorderThickness="0,0,0,0" Visibility="{Binding Visibility, ElementName=AccentBackground}">
-                            <Border.Background>
-
-                                <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.35" FallbackColor="{ThemeResource SystemAccentColor}"/>
-                            </Border.Background>
-                        </Border>
-                        <Border BorderThickness="0,1,0,0" Height="135" Background="{ThemeResource SystemControlBackgroundAltMediumLowBrush}" BorderBrush="#338A8A8A" VerticalAlignment="Bottom"/>
-                        <TextBlock TextWrapping="Wrap" Text="Home" Margin="55,18,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Button x:Name="HideHome" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="45" Height="45" Click="HideHome_Click" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="10" Background="{x:Null}" BorderBrush="{x:Null}" ToolTipService.ToolTip="Go to workspace" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="0,0,0,0" BorderThickness="0,0,0,0" CornerRadius="0,7,0,0">
-                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{ThemeResource SymbolThemeFontFamily}" Text="&#xE106;" FontSize="14"/>
-                        </Button>
-                        <Image Source="/Assets/Home.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" Width="25" Height="25"/>
-                        <StackPanel Spacing="0" Margin="0,400,0,0"/>
-                        <Grid Margin="25,0,0,20" VerticalAlignment="Bottom">
-                            <Image Height="100" Width="100" Source="/Assets/utevericon.png" HorizontalAlignment="Left"/>
-                            <TextBlock TextWrapping="Wrap" Text="UltraTextEdit UWP+" Margin="120,0,0,40" VerticalAlignment="Center" FontSize="18"/>
-                            <TextBlock TextWrapping="Wrap" Text="build 26100.268 - © jpbandroid, Ivirius 2021 - 2024" Margin="120,10,0,0" VerticalAlignment="Center" FontSize="12"/>
-                            <StackPanel Orientation="Horizontal" Margin="120,50,0,0">
-                                <HyperlinkButton x:Name="hyperlinkButton" Content="https://errortek.vercel.app/" NavigateUri="https://errortek.vercel.app/" Padding="0,0,0,0" FontSize="11"/>
-                                <HyperlinkButton x:Name="hyperlinkButton2" Content="https://ivirius.vercel.app/" NavigateUri="https://ivirius.vercel.app/" Padding="0,0,0,0" FontSize="11"/>
-                            </StackPanel>
-                        </Grid>
-                        <Border Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="4,4,4,4" Margin="15,64,0,0" Background="#268E8E8E"/>
-                        <Border Background="{Binding Foreground, ElementName=LeftInd}" Height="24" CornerRadius="1.5,1.5,1.5,1.5" Width="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,77,0,0"/>
-                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,120,0,0" Spacing="5">
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="OpenButton_Click" ToolTipService.ToolTip="Open">
-                                <TextBlock Text="&#xE1A5;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="MenuFlyoutItem_Click_35" ToolTipService.ToolTip="Open multiple files (coming soon)" IsEnabled="False">
-                                <TextBlock Text="&#xE1A5;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding Foreground, ElementName=LeftInd}"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="SaveButton_Click" ToolTipService.ToolTip="Save">
-                                <TextBlock Text="&#xE105;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="SaveAsButton_Click" ToolTipService.ToolTip="Save as">
-                                <TextBlock Text="&#xEA35;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="DelB_Click" ToolTipService.ToolTip="Delete">
-                                <TextBlock Text="&#xE107;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Button Background="Transparent" BorderThickness="0,0,0,0" Width="50" Height="50" Click="PntB_Click" ToolTipService.ToolTip="Print (BETA)" Padding="0,0,0,0">
-                                <Grid>
-                                    <TextBlock Text="&#xF56D;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFDC5454" Margin="0,0,2,0"/>
-                                </Grid>
-                            </Button>
-                        </StackPanel>
-                        <TextBlock Text="&#xE130;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,75,0,0"/>
-                        <StackPanel Margin="100,60,25,160" Spacing="10">
-                            <TextBlock TextWrapping="Wrap" Text="New File" FontSize="24"/>
-                            <Button Height="135" Click="BlankFIle" Width="150" Padding="0,0,0,0">
-                                <Grid Width="148" Height="133">
-                                    <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center" Background="White"/>
-                                    <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                        <Border.Background>
-                                            <LinearGradientBrush>
-                                                <GradientStop Color="#FF4B5BB3"/>
-                                                <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Blank" Foreground="White"/>
-                                    </Border>
-                                </Grid>
-                            </Button>
-                            <TextBlock TextWrapping="Wrap" Text="Templates" FontSize="24" Margin="0,15,0,0"/>
-                            <Grid>
-                                <Button Height="135" Click="Button_Click_21" Width="150" Padding="0,0,0,0" VerticalAlignment="Top">
-                                    <Grid Width="148" Height="133">
-                                        <Image Source="/Assets/Templates/EssayTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Essay" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                                <Button Height="135" Click="Button_Click_22" Width="150" Padding="0,0,0,0" VerticalAlignment="Top" Margin="175,0,0,0">
-                                    <Grid Width="148" Height="133">
-                                        <Image Source="/Assets/Templates/ResumeTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Resume" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                                <Button Height="135" Click="Button_Click_23" Width="150" Padding="0,0,0,0" VerticalAlignment="Top" Margin="350,0,0,0">
-                                    <Grid Width="148" Height="133">
-                                        <Image Source="/Assets/Templates/CreditsTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Credits" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                                <Button Height="135" Click="Button_Click_24" Width="150" Padding="0,0,0,0" VerticalAlignment="Top" Margin="525,0,0,0">
-                                    <Grid Width="148" Height="133">
-                                        <Image Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125" Source="/Assets/Templates/ImageEssayTemp.png"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Image Essay" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                                <Button Height="135" Click="Button_Click_25" Width="150" Padding="0,0,0,0" VerticalAlignment="Top" Margin="0,160,0,0">
-                                    <Grid Width="148" Height="133">
-                                        <Image Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125" Source="/Assets/Templates/ImageGalleryTemp.png"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Image Gallery" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                                <Button Height="135" Click="Button_Click_26" Width="150" Padding="0,0,0,0" VerticalAlignment="Top" Margin="175,160,0,0">
-                                    <Grid Width="148" Height="133">
-                                        <Image Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Left" Height="125" Source="/Assets/Templates/NewspaperTemp.png"/>
-                                        <Border CornerRadius="3,3,0,0" Margin="0,0,0,35" Height="NaN" Width="188" HorizontalAlignment="Center"/>
-                                        <Border VerticalAlignment="Bottom" CornerRadius="0,0,3,3" Height="35">
-                                            <Border.Background>
-                                                <LinearGradientBrush>
-                                                    <GradientStop Color="#FF4B5BB3"/>
-                                                    <GradientStop Color="#FF65A7FF" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Newspaper" Foreground="White"/>
-                                        </Border>
-                                    </Grid>
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Border>
             <RelativePanel
             x:Name="containerPanel"
             RelativePanel.AlignLeftWithPanel="True"
@@ -657,21 +288,6 @@
                         FontWeight="Normal" Foreground="{ThemeResource SystemAccentColor}"/>
                         </StackPanel>
                     </Border>
-                    <Grid x:Name="InsiderGrid" Visibility="Collapsed">
-                        <Button Background="#FF9BF00B" Width="50" Height="25" Padding="0" CornerRadius="8" Click="showinsiderinfo">
-                            <Grid>
-                                <TextBlock Text="RP" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
-                            </Grid>
-                        </Button>
-                        <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1"
-    Target="{x:Bind InsiderGrid}"
-    Title="Release Preview Channel"
-    Subtitle="The Release Preview Channel is the Insider Channel that receives finalized major builds that are nearly at their RTM (Release to Manufacturing) state.">
-                            <muxc:TeachingTip.IconSource>
-                                <muxc:FontIconSource  Glyph="&#xF1AD;"/>
-                            </muxc:TeachingTip.IconSource>
-                        </muxc:TeachingTip>
-                    </Grid>
                     <TextBlock
                         x:Name="UnsavedTextBlock"
                         Padding="5,0"
@@ -797,7 +413,7 @@
                         <controls:TabbedCommandBarItem Header="Home" Background="Transparent">
                             <AppBarToggleButton
                     Click="BoldButton_Click" x:Name="BoldButton"
-                    Style="{StaticResource TransparentToggleButton}"
+                    Style="{StaticResource CrimsonToolbarToggleButton}"
                     ToolTipService.ToolTip="Bold">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="Bold" />
@@ -806,7 +422,7 @@
 
                             <AppBarToggleButton
                     Click="ItalicButton_Click" x:Name="ItalicButton"
-                    Style="{StaticResource TransparentToggleButton}"
+                    Style="{StaticResource CrimsonToolbarToggleButton}"
                     ToolTipService.ToolTip="Italic">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="Italic" />
@@ -814,7 +430,7 @@
                             </AppBarToggleButton>
                             <AppBarToggleButton
                     Click="UnderlineButton_Click" x:Name="UnderlineButton"
-                    Style="{StaticResource TransparentToggleButton}"
+                    Style="{StaticResource CrimsonToolbarToggleButton}"
                     ToolTipService.ToolTip="Underline">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="Underline" />
@@ -822,14 +438,14 @@
                             </AppBarToggleButton>
                             <AppBarToggleButton
                     Click="StrikethroughButton_Click" x:Name="StrikethroughButton"
-                    Style="{StaticResource TransparentToggleButton}"
+                    Style="{StaticResource CrimsonToolbarToggleButton}"
                     ToolTipService.ToolTip="Strikethrough">
                                 <FontIcon FontSize="17" Glyph="&#xEDE0;" />
                             </AppBarToggleButton>
                             <AppBarSeparator />
                             <AppBarButton
                     Click="AlignLeftButton_Click"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="Align Left">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="AlignLeft" />
@@ -837,7 +453,7 @@
                             </AppBarButton>
                             <AppBarButton
                     Click="AlignCenterButton_Click"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="Align Center">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="AlignCenter" />
@@ -845,7 +461,7 @@
                             </AppBarButton>
                             <AppBarButton
                     Click="AlignRightButton_Click"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="Align Right">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <SymbolIcon Symbol="AlignRight" />
@@ -853,7 +469,7 @@
                             </AppBarButton>
                             <AppBarButton
 Click="AlignJustifyButton_Click"
-Style="{StaticResource TransparentButton}"
+Style="{StaticResource CrimsonToolbarButton}"
 ToolTipService.ToolTip="Justify">
                                 <Viewbox MaxWidth="17" MaxHeight="17">
                                     <PathIcon Data="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1ZM2 18a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1ZM3 11a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H3Z"/>
@@ -1603,7 +1219,7 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                             </AppBarElementContainer>
 
                             <AppBarSeparator />
-                            <AppBarButton Style="{StaticResource TransparentButton}" ToolTipService.ToolTip="FindDoc" Click="FindButton2_Click">
+                            <AppBarButton Style="{StaticResource CrimsonToolbarButton}" ToolTipService.ToolTip="FindDoc" Click="FindButton2_Click">
                                 <Button.Content>
                                     <Viewbox MaxWidth="17" MaxHeight="17">
                                         <SymbolIcon Symbol="Find" />
@@ -1624,13 +1240,13 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                             <AppBarSeparator />
                             <AppBarButton
                     Click="AddImageButton_Click"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="AddImage">
                                 <FontIcon FontSize="17" Glyph="&#xE8B9;" />
                             </AppBarButton>
                             <AppBarButton
                     x:Name="AddLinkButton"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="AddHyperlink">
                                 <Button.Content>
                                     <FontIcon FontSize="17" Glyph="&#xE71B;" />
@@ -1646,20 +1262,20 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                             </AppBarButton>
                             <AppBarButton
                     Click="DateInsertionAsync"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="Insert current Date/Time">
                                 <FontIcon FontSize="17" Glyph="&#xE163;" />
                             </AppBarButton>
                             <AppBarButton
                     Click="AddTableButton_Click"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="AddTable">
                                 <FontIcon FontSize="17" Glyph="&#xF261;" />
                             </AppBarButton>
                             <AppBarButton
                     Click="AddSymbolButton_Click"
                             x:Name="symbolbut"
-                    Style="{StaticResource TransparentButton}"
+                    Style="{StaticResource CrimsonToolbarButton}"
                     ToolTipService.ToolTip="AddSymbol">
                                 <FontIcon FontSize="17" Glyph="&#xED58;" />
                                 <AppBarButton.Flyout>
@@ -1671,17 +1287,11 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                                     MaximumRowsOrColumns="4"
                                     Orientation="Horizontal">
                                                     <VariableSizedWrapGrid.Resources>
-                                                        <Style TargetType="Rectangle">
-                                                            <Setter Property="Width" Value="32" />
-                                                            <Setter Property="Height" Value="32" />
-                                                        </Style>
-
                                                         <Style TargetType="Button">
-                                                            <Setter Property="Padding" Value="0" />
-                                                            <Setter Property="MinWidth" Value="32" />
-                                                            <Setter Property="MinHeight" Value="32" />
-                                                            <Setter Property="Margin" Value="5" />
-                                                            <Setter Property="CornerRadius" Value="8" />
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                            <Setter Property="CornerRadius" Value="4"/>
+                                                            <Setter Property="Margin" Value="4"/>
                                                         </Style>
                                                     </VariableSizedWrapGrid.Resources>
                                                     <Button
@@ -1734,7 +1344,7 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                                                     </Button>
 
                                                 </VariableSizedWrapGrid>
-                                                <Button Content="More symbols" Click="more_symbols"/>
+                                                <Button Content="More symbols" Click="more_symbols" Width="160"/>
                                             </StackPanel>
                                         </RelativePanel>
                                     </Flyout>
@@ -1742,7 +1352,7 @@ VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="5,5,5,5" ToolTi
                             </AppBarButton>
                             <AppBarButton
 Click="ComputeHash_Click"
-Style="{StaticResource TransparentButton}"
+Style="{StaticResource CrimsonToolbarButton}"
 ToolTipService.ToolTip="Compute Hash">
                                 <FontIcon FontSize="17" Glyph="&#xE943;" />
                             </AppBarButton>
@@ -1823,8 +1433,8 @@ ToolTipService.ToolTip="Compute Hash">
                                                     </muxc:DropDownButton>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0" Spacing="3">
-                                                    <ToggleButton Style="{StaticResource TransparentToggleButton}" x:Name="BB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE19B;" Width="30" Height="30" Click="BoldButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,3,2,2" ToolTipService.ToolTip="Bold (Ctrl + B)" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                                                    <ToggleButton x:Name="IB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE199;" Width="30" Height="30" Click="ItalicButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" ToolTipService.ToolTip="Italic (Ctrl + I)" CornerRadius="4,4,4,4" Padding="5,5,5,5" Style="{StaticResource TransparentToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                                                    <ToggleButton Style="{StaticResource CrimsonToolbarToggleButton}" x:Name="BB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE19B;" Width="30" Height="30" Click="BoldButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,3,2,2" ToolTipService.ToolTip="Bold (Ctrl + B)" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                                                    <ToggleButton x:Name="IB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE199;" Width="30" Height="30" Click="ItalicButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" ToolTipService.ToolTip="Italic (Ctrl + I)" CornerRadius="4,4,4,4" Padding="5,5,5,5" Style="{StaticResource CrimsonToolbarToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}"/>
                                                     <muxc:DropDownButton x:Name="UB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="14" ToolTipService.ToolTip="Underline (Ctrl + U)" Background="{x:Null}" BorderBrush="{x:Null}" CornerRadius="4,4,4,4" Padding="5,5,5,6">
                                                         <Grid>
                                                             <TextBlock TextWrapping="Wrap" Text="&#xE19A;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"/>
@@ -1872,7 +1482,7 @@ ToolTipService.ToolTip="Compute Hash">
                                                             </MenuFlyout>
                                                         </muxc:DropDownButton.Flyout>
                                                     </muxc:DropDownButton>
-                                                    <ToggleButton x:Name="STB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" Click="StrikethroughButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="2,2,2,2" ToolTipService.ToolTip="Strikethrough (Ctrl + T)" CornerRadius="4,4,4,4" Style="{StaticResource TransparentToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                                    <ToggleButton x:Name="STB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" Click="StrikethroughButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="2,2,2,2" ToolTipService.ToolTip="Strikethrough (Ctrl + T)" CornerRadius="4,4,4,4" Style="{StaticResource CrimsonToolbarToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
                                                         <ToggleButton.KeyboardAccelerators>
                                                             <KeyboardAccelerator IsEnabled="True" Key="T" Modifiers="Control"/>
                                                         </ToggleButton.KeyboardAccelerators>
@@ -1880,13 +1490,13 @@ ToolTipService.ToolTip="Compute Hash">
                                                             <TextBlock TextWrapping="Wrap" Text="&#xEDE0;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
                                                         </Grid>
                                                     </ToggleButton>
-                                                    <ToggleButton x:Name="SubscriptButton" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="0,0,2,2" ToolTipService.ToolTip="Subscript" Click="SubscriptButton_Click" CornerRadius="4,4,4,4" Style="{StaticResource TransparentToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                                    <ToggleButton x:Name="SubscriptButton" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="0,0,2,2" ToolTipService.ToolTip="Subscript" Click="SubscriptButton_Click" CornerRadius="4,4,4,4" Style="{StaticResource CrimsonToolbarToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
                                                         <Grid Width="20" Height="20" Margin="0,2,0,0">
                                                             <TextBlock Text="&#xE8BB;" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0,0,0"/>
                                                             <TextBlock FontSize="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Text="(1)" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold" FontFamily="Segoe UI"/>
                                                         </Grid>
                                                     </ToggleButton>
-                                                    <ToggleButton x:Name="SuperscriptButton" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="0,0,2,2" ToolTipService.ToolTip="Superscript" Click="SuperscriptButton_Click" CornerRadius="4,4,4,4" Style="{StaticResource TransparentToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                                    <ToggleButton x:Name="SuperscriptButton" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Padding="0,0,2,2" ToolTipService.ToolTip="Superscript" Click="SuperscriptButton_Click" CornerRadius="4,4,4,4" Style="{StaticResource CrimsonToolbarToggleButton}" Background="{x:Null}" BorderBrush="{x:Null}">
                                                         <Grid Width="20" Height="20" Margin="0,2,0,0">
                                                             <TextBlock FontSize="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-1,0,0" Text="(1)" Foreground="{ThemeResource SystemAccentColor}" FontWeight="Bold" FontFamily="Segoe UI"/>
                                                             <TextBlock Text="&#xE8BB;" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0,0,0"/>
@@ -2138,10 +1748,10 @@ ToolTipService.ToolTip="Compute Hash">
                                             <Grid x:Name="Paragraph" Height="128" RelativePanel.RightOf="Font" Margin="10,2,0,0" Width="Auto">
                                                 <TextBlock x:Name="HI6" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,77,0,0" Text="&#xE11B;" Tag="HelpItem" ToolTipService.ToolTip="Insert hyperlinks, images and the current date and time in different formats" Visibility="Collapsed"/>
                                                 <StackPanel Margin="0,49,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Spacing="5">
-                                                    <Button x:Name="LeftAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A2;" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Left" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Click="AlignLeftButton_Click" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource TransparentButton}"/>
-                                                    <Button x:Name="CenterAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A1;" Width="30" Height="30" Click="AlignCenterButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Center" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource TransparentButton}"/>
-                                                    <Button x:Name="RightAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A0;" Width="30" Height="30" Click="AlignRightButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Right" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource TransparentButton}"/>
-                                                    <Button x:Name="JustifyAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" Click="AlignJustifyButton_Click" Padding="2,2,2,2" ToolTipService.ToolTip="Justify" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource TransparentButton}">
+                                                    <Button x:Name="LeftAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A2;" Width="30" Height="30" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Left" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Click="AlignLeftButton_Click" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource CrimsonToolbarButton}"/>
+                                                    <Button x:Name="CenterAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A1;" Width="30" Height="30" Click="AlignCenterButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Center" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource CrimsonToolbarButton}"/>
+                                                    <Button x:Name="RightAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="&#xE1A0;" Width="30" Height="30" Click="AlignRightButton_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="16" Padding="2,2,2,2" ToolTipService.ToolTip="Right" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource CrimsonToolbarButton}"/>
+                                                    <Button x:Name="JustifyAl" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="30" Height="30" Click="AlignJustifyButton_Click" Padding="2,2,2,2" ToolTipService.ToolTip="Justify" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" VerticalAlignment="Top" Background="Transparent" BorderBrush="#00000000" Style="{StaticResource CrimsonToolbarButton}">
                                                         <Button.Content>
                                                             <Viewbox MaxWidth="16" MaxHeight="16">
                                                                 <PathIcon Data="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1ZM2 18a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1ZM3 11a1 1 0 1 0 0 2h18a1 1 0 1 0 0-2H3Z"/>
@@ -2195,7 +1805,7 @@ ToolTipService.ToolTip="Compute Hash">
                                     </Grid>
                                     <Grid x:Name="Insert" Height="132" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,27,0,0" Spacing="10">
-                                            <Button x:Name="Image_Insert" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" Click="AddImageButton_Click" ToolTipService.ToolTip="Insert image" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
+                                            <Button Style="{StaticResource CrimsonToolbarButton}" x:Name="Image_Insert" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" Click="AddImageButton_Click" ToolTipService.ToolTip="Insert image" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
                                                 <Grid Height="48" Margin="0,-3,0,0">
                                                     <Grid Height="55" HorizontalAlignment="Center" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.5,0.5" Margin="0,-14,2,0">
                                                         <Grid.RenderTransform>
@@ -2209,7 +1819,7 @@ ToolTipService.ToolTip="Compute Hash">
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center" Margin="0,0,0,1"><Run Text="Insert"/><LineBreak/><Run Text="Image"/></TextBlock>
                                                 </Grid>
                                             </Button>
-                                            <Button x:Name="LinkInsert" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert hyperlink" Padding="0,0,0,0" Margin="0,1,0,0" Background="Transparent" BorderBrush="#00000000" CornerRadius="4,4,4,4">
+                                            <Button x:Name="LinkInsert" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert hyperlink" Padding="0,0,0,0" Margin="0,1,0,0" Background="Transparent" BorderBrush="#00000000" CornerRadius="4,4,4,4">
                                                 <Button.Flyout>
                                                     <Flyout Placement="Bottom">
                                                         <StackPanel Orientation="Vertical">
@@ -2223,14 +1833,14 @@ ToolTipService.ToolTip="Compute Hash">
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="30"><Run Text="Insert"/><LineBreak/><Run Text="Link"/></TextBlock>
                                                 </Grid>
                                             </Button>
-                                            <Button x:Name="DateTimeInsert" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="DateInsertionAsync" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert date and time" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
+                                            <Button x:Name="DateTimeInsert" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="DateInsertionAsync" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert date and time" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
                                                 <Grid Width="30" Height="45" Margin="4,1,4,-1">
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="32"><Run Text="Date &amp;"/><LineBreak/><Run Text="Time"/></TextBlock>
                                                     <PathIcon Data="M 3 5 C 3 4 4 3 5 3 L 15 3 C 16 3 17 4 17 5 L 17 12 L 16 12 L 16 5 C 16 4.5 15.5 4 15 4 L 5 4 C 4.5 4 4 4.5 4 5 L 4 15 C 4 15.5 4.5 16 5 16 L 12 16 L 12 17 L 5 17 C 4 17 3 16 3 15 M 16.5 13 A 1 1 0 0 0 16.5 20 A 1 1 0 0 0 16.5 13 M 16.5 14 A 1 1 0 0 1 16.5 19 A 1 1 0 0 1 16.5 14 M 17 17 C 16 17 16 17 16 16 L 16 15.5 C 16 14.5 17 14.5 17 15.5 L 17 16 L 17.5 16 C 18.5 16 18.5 17 17.5 17 L 17 17 M 6 7 A 1 1 0 0 0 6 5 A 1 1 0 0 0 6 7 M 10 7 A 1 1 0 0 0 10 5 A 1 1 0 0 0 10 7 M 14 7 A 1 1 0 0 0 14 5 A 1 1 0 0 0 14 7 M 5 8 L 15 8 L 15 9 L 5 9 M 5 10 L 9 10 L 9 11 L 5 11 M 11 10 L 15 10 L 15 11 L 11 11 M 5 12 L 9 12 L 9 13 L 5 13 M 11 12 L 15 12 C 14.18 12.008 13.393 12.538 13 13 L 11 13 M 5 14 L 9 14 L 9 15 L 5 15 M 11 14 L 12.434 14.001 C 12.062 14.47 12 15 12 15 L 11 15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" />
                                                     <PathIcon Data="M 3 5 M 16.5 13 A 1 1 0 0 0 16.5 20 A 1 1 0 0 0 16.5 13 M 16.5 14 A 1 1 0 0 1 16.5 19 A 1 1 0 0 1 16.5 14 M 17 17 C 16 17 16 17 16 16 L 16 15.5 C 16 14.5 17 14.5 17 15.5 L 17 16 L 17.5 16 C 18.5 16 18.5 17 17.5 17 L 17 17" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FF5AFF00" />
                                                 </Grid>
                                             </Button>
-                                            <Button x:Name="Symbols_Insert" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert symbols" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
+                                            <Button x:Name="Symbols_Insert" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="Insert symbols" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
                                                 <Grid Height="48" Margin="0,-3,0,0">
                                                     <Grid Height="55" HorizontalAlignment="Center" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.5,0.5" Margin="0,-14,2,0">
                                                         <Grid.RenderTransform>
@@ -2248,90 +1858,85 @@ ToolTipService.ToolTip="Compute Hash">
                                                         <RelativePanel>
                                                             <StackPanel>
                                                                 <VariableSizedWrapGrid
-x:Name="symbolGrid2"
-MaximumRowsOrColumns="4"
-Orientation="Horizontal">
+                                    x:Name="symbolGrid2"
+                                    MaximumRowsOrColumns="4"
+                                    Orientation="Horizontal">
                                                                     <VariableSizedWrapGrid.Resources>
-                                                                        <Style TargetType="Rectangle">
-                                                                            <Setter Property="Width" Value="32" />
-                                                                            <Setter Property="Height" Value="32" />
-                                                                        </Style>
-
                                                                         <Style TargetType="Button">
-                                                                            <Setter Property="Padding" Value="0" />
-                                                                            <Setter Property="MinWidth" Value="32" />
-                                                                            <Setter Property="MinHeight" Value="32" />
-                                                                            <Setter Property="Margin" Value="5" />
-                                                                            <Setter Property="CornerRadius" Value="8" />
+                                                                            <Setter Property="Background" Value="Transparent"/>
+                                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                                            <Setter Property="CornerRadius" Value="4"/>
+                                                                            <Setter Property="Margin" Value="4"/>
                                                                         </Style>
                                                                     </VariableSizedWrapGrid.Resources>
                                                                     <Button
-    AutomationProperties.Name="Mutiply"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Multiplication symbol"
-     Content="×">
+                                        AutomationProperties.Name="Mutiply"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Multiplication symbol"
+                                         Content="×">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="Divide"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Division symbol"
-            Content="÷">
+                                        AutomationProperties.Name="Divide"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Division symbol"
+                                                Content="÷">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="LeftArrow"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Left Arrow symbol"
-            Content="←">
+                                        AutomationProperties.Name="LeftArrow"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Left Arrow symbol"
+                                                Content="←">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="RightArrow"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Right Arrow symbol"
-            Content="→">
+                                        AutomationProperties.Name="RightArrow"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Right Arrow symbol"
+                                                Content="→">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="Degree"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Degree symbol"
-            Content="°">
+                                        AutomationProperties.Name="Degree"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Degree symbol"
+                                                Content="°">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="Paragraph"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Paragraph symbol"
-            Content="§">
+                                        AutomationProperties.Name="Paragraph"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Paragraph symbol"
+                                                Content="§">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="Mu"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Lowercase mu (micro) symbol"
-            Content="µ">
+                                        AutomationProperties.Name="Mu"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Lowercase mu (micro) symbol"
+                                                Content="µ">
                                                                     </Button>
                                                                     <Button
-    AutomationProperties.Name="SquareRoot"
-    Click="SymbolButton_Click"
-    ToolTipService.ToolTip="Square root symbol"
-            Content="√">
+                                        AutomationProperties.Name="SquareRoot"
+                                        Click="SymbolButton_Click"
+                                        ToolTipService.ToolTip="Square root symbol"
+                                                Content="√">
                                                                     </Button>
 
                                                                 </VariableSizedWrapGrid>
-                                                                <Button Content="More symbols" Click="more_symbols"/>
+                                                                <Button Content="More symbols" Click="more_symbols" Width="160"/>
                                                             </StackPanel>
                                                         </RelativePanel>
                                                     </Flyout>
+
                                                 </Button.Flyout>
                                             </Button>
                                         </StackPanel>
                                     </Grid>
                                     <Grid x:Name="Help" Height="132">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,27,0,0" Spacing="10">
-                                            <Button x:Name="AboutButton" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" Click="AboutBtn_Click" ToolTipService.ToolTip="About" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
+                                            <Button x:Name="AboutButton" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" Click="AboutBtn_Click" ToolTipService.ToolTip="About" CornerRadius="4,4,4,4" VerticalAlignment="Center" Padding="0,0,0,0" Background="Transparent" BorderBrush="{x:Null}">
                                                 <Grid Width="30" Height="45" Margin="4,1,4,-1">
                                                     <TextBlock TextWrapping="Wrap" Text="&#xE897;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="30"><Run Text="About"/></TextBlock>
                                                 </Grid>
                                             </Button>
-                                            <Button x:Name="uteverButton" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="utever" Padding="0,0,0,0" Margin="0,1,0,0" Background="Transparent" BorderBrush="#00000000" CornerRadius="4,4,4,4" Click="uteverclick">
+                                            <Button x:Name="uteverButton" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Width="40" Height="53" FontSize="22" ToolTipService.ToolTip="utever" Padding="0,0,0,0" Margin="0,1,0,0" Background="Transparent" BorderBrush="#00000000" CornerRadius="4,4,4,4" Click="uteverclick">
                                                 <Grid Width="30" Height="45" Margin="4,1,4,-1">
                                                     <TextBlock TextWrapping="Wrap" Text="&#xE897;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="30"><Run Text="utever"/></TextBlock>
@@ -2341,7 +1946,7 @@ Orientation="Horizontal">
                                     </Grid>
                                     <Grid x:Name="Developer" Height="132" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,27,0,0" Spacing="10">
-                                            <Button x:Name="GenerateHash" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="ComputeHash_Click" Width="80" Height="53" FontSize="22" ToolTipService.ToolTip="Generate hash/Base64" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
+                                            <Button x:Name="GenerateHash" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="ComputeHash_Click" Width="80" Height="53" FontSize="22" ToolTipService.ToolTip="Generate hash/Base64" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
                                                 <Grid Width="60" Height="45" Margin="4,1,4,-1">
                                                     <TextBlock TextWrapping="Wrap" Text="&#xE943;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="64"><Run Text="Generate"/><LineBreak/><Run Text="Hash/Base64"/></TextBlock>
@@ -2351,7 +1956,7 @@ Orientation="Horizontal">
                                     </Grid>
                                     <Grid x:Name="Comments" Height="132" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,27,0,0" Spacing="10">
-                                            <Button x:Name="CloseComments" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="closecomments" Width="80" Height="53" FontSize="22" ToolTipService.ToolTip="Close Comments" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
+                                            <Button x:Name="CloseComments" Style="{StaticResource CrimsonToolbarButton}" FontFamily="{StaticResource SymbolThemeFontFamily}" Click="closecomments" Width="80" Height="53" FontSize="22" ToolTipService.ToolTip="Close Comments" Padding="0,0,0,0" Margin="0,1,0,0" CornerRadius="4,4,4,4" Background="{x:Null}" BorderBrush="{x:Null}">
                                                 <Grid Width="60" Height="45" Margin="4,1,4,-1">
                                                     <TextBlock TextWrapping="Wrap" Text="&#xF716;" FontFamily="{StaticResource SymbolThemeFontFamily}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                                     <TextBlock FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,20,0,0" Width="64"><Run Text="Close"/><LineBreak/><Run Text="Comments"/></TextBlock>
@@ -2420,7 +2025,7 @@ Orientation="Horizontal">
             FontFamily="Segoe UI"
             IsSpellCheckEnabled="False"
             TextWrapping="WrapWholeWords"
-            TextChanged="RichEditBox_TextChanged" SelectionChanged="editor_SelectionChanged">
+            TextChanged="RichEditBox_TextChanged" SelectionChanged="editor_SelectionChanged" KeyDown="editor_KeyDown">
                             <RichEditBox.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="B" Invoked="OnKeyboardAcceleratorInvoked"/>
                                 <KeyboardAccelerator Modifiers="Control" Key="I" Invoked="OnKeyboardAcceleratorInvoked" />
@@ -2428,6 +2033,16 @@ Orientation="Horizontal">
                                 <KeyboardAccelerator Modifiers="Control" Key="S" Invoked="OnKeyboardAcceleratorInvoked" />
                             </RichEditBox.KeyboardAccelerators>
                         </RichEditBox>
+                        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+                            <DropDownButton x:Name="SmartEditorHyphen" Visibility="Collapsed" Content="⚡" ToolTipService.ToolTip="SmartEditor - Auto list" PointerEntered="SmartEditorHyphen_PointerEntered" PointerExited="SmartEditorHyphen_PointerExited">
+                                <DropDownButton.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Name="UndoList" Text="Undo" Click="UndoList_Click"/>
+                                        <MenuFlyoutItem x:Name="CloseSmartEditorAutoList" Text="Hide" Click="CloseSmartEditorAutoList_Click"/>
+                                    </MenuFlyout>
+                                </DropDownButton.Flyout>
+                            </DropDownButton>
+                        </StackPanel>
                         <Grid x:Name="Bottom" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,5,0,5" Padding="0, 0, 0, 5">
                             <Border x:Name="StatusBar" BorderThickness="1" CornerRadius="3,3,3,3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="7,0,7,5" Height="35" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
                                 <Border.BorderBrush>
@@ -2455,21 +2070,224 @@ Orientation="Horizontal">
             </SplitView>
             <Grid RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
                 <diags:MessageBoxesGrid>
-                    <diags:MessageBox x:Name="AboutBox" IsSingleButton="True" FirstButtonText="OK" Title="About" BlockUserInput="False" RememberPosition="False" MessageBoxHeight="370" MessageBoxWidth="400" d:IsHidden="True">
-                        <Grid Margin="10,0,10,0">
-                            <Image HorizontalAlignment="Left" Height="90" Margin="5,5,0,0" VerticalAlignment="Top" Width="90" Source="/Assets/utevericon.png"/>
-                            <TextBlock Foreground="{ThemeResource DefaultTextForegroundThemeBrush}" HorizontalAlignment="Left" Margin="120,20,0,0" TextWrapping="Wrap" Text="UltraTextEdit UWP Plus" VerticalAlignment="Top" FontSize="16"/>
-                            <TextBlock Foreground="{ThemeResource DefaultTextForegroundThemeBrush}" HorizontalAlignment="Left" Margin="120,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="11">Version 10.0.26100.268 - 24H2 Stable<LineBreak/>Copyright ©️ jpb/ErrorTek 2021-2024, © Ivirius 2023-2024
-<LineBreak/>Licensed under the MIT License</TextBlock>
-                            <StackPanel Margin="0,120,0,0">
-                                <HyperlinkButton Content="WinUI 2.8.6" Click="HyperlinkButton_Click"/>
-                                <HyperlinkButton Content="Windows Community Toolkit 7.1.3" Click="HyperlinkButton_Click_1"/>
-                                <HyperlinkButton Content="UWP (Universal Windows Platform)" Click="HyperlinkButton_Click_2"/>
+                    <diags:MessageBox x:Name="AboutBox" Title="About" IsSingleButton="True" FirstButtonText="OK" RememberPosition="False" MessageBoxHeight="520" MessageBoxWidth="400" CloseButtonStyle="Win32" d:IsHidden="True">
+                        <Grid Margin="10,-115,10,0">
+                            <Image HorizontalAlignment="Left" Height="100" Margin="5,125,0,0" VerticalAlignment="Top" Width="100" Source="/Assets/utevericon.png"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="120,140,0,0" TextWrapping="Wrap" Text="UltraTextEdit UWP Plus" VerticalAlignment="Top" FontSize="16"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="120,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="11"><Run Text="10.0.26269.1 - Full release"/><LineBreak/><Run Text="Copyright © 2021-2024 ErrorTek"/><LineBreak/><Run Text="Compiled September 2, 2024"/><LineBreak/><Run Text="GitHub release - UWP"/><LineBreak/><Run/></TextBlock>
+                            <StackPanel Margin="0,235,0,0">
+                                <HyperlinkButton Content="WinUI 2" Padding="11,6,11,7"/>
+                                <HyperlinkButton Content="Windows Community Toolkit" Padding="11,6,11,7"/>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Margin="0,235,0,0">
+                                <HyperlinkButton Content="Win2D" Padding="11,6,11,7"/>
+                                <HyperlinkButton Content="MicaUWP" Padding="11,6,11,7"/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Top" Margin="15,350,15,0" Spacing="15">
+                                <TextBlock TextWrapping="Wrap" Text="Developers:" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                <Grid>
+                                    <PersonPicture Width="50" Height="50" HorizontalAlignment="Left" ProfilePicture="/Assets/ProfilePictures/ErrorTek.png"/>
+                                    <TextBlock TextWrapping="Wrap" Text="ErrorTek" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0" FontSize="16"/>
+                                </Grid>
+                                <Grid>
+                                    <PersonPicture Width="50" Height="50" HorizontalAlignment="Left" ProfilePicture="/Assets/ProfilePictures/Ivirius.png"/>
+                                    <TextBlock TextWrapping="Wrap" Text="Ivirius" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="65,0,0,0" FontSize="16"/>
+                                </Grid>
                             </StackPanel>
                         </Grid>
+
                     </diags:MessageBox>
                 </diags:MessageBoxesGrid>
             </Grid>
         </RelativePanel>
+        <Border x:Name="HomePage" d:IsHidden="False" Visibility="Collapsed">
+            <Border BorderBrush="#FF777777" BorderThickness="1" CornerRadius="8,8,8,8" Margin="15,15,15,15">
+                <Grid x:FieldModifier="public" Background="{Binding Background, ElementName=PageTitleBar}">
+                    <Border x:Name="HomeAccentBackground" BorderThickness="0,0,0,0" Visibility="{Binding Visibility, ElementName=AccentBackground}">
+                        <Border.Background>
+
+                            <AcrylicBrush BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.35" FallbackColor="{ThemeResource SystemAccentColor}"/>
+                        </Border.Background>
+                    </Border>
+                    <Border BorderThickness="0,1,0,0" Height="135" Background="{ThemeResource SystemControlBackgroundAltMediumLowBrush}" BorderBrush="#338A8A8A" VerticalAlignment="Bottom"/>
+                    <TextBlock TextWrapping="Wrap" Text="Home" Margin="55,18,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button x:Name="HideHome" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="45" Height="45" Click="HideHome_Click" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Background="{x:Null}" BorderBrush="{x:Null}" ToolTipService.ToolTip="Go to workspace" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="0,0,0,0" BorderThickness="0,0,0,0" CornerRadius="0,7,0,0">
+                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xE106;" FontSize="14"/>
+                    </Button>
+                    <Image Source="/Assets/Home.png" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0" Width="25" Height="25"/>
+                    <StackPanel Spacing="0" Margin="0,400,0,0"/>
+                    <Grid Margin="25,0,0,20" VerticalAlignment="Bottom">
+                        <Image Height="100" Width="100" Source="/Assets/utevericon.png" HorizontalAlignment="Left"/>
+                        <TextBlock TextWrapping="Wrap" Text="UltraTextEdit UWP+" Margin="120,0,0,40" VerticalAlignment="Center" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Text="build 26269.1 - © jpbandroid, Ivirius 2021 - 2024" Margin="120,10,0,0" VerticalAlignment="Center" FontSize="12"/>
+                        <StackPanel Orientation="Horizontal" Margin="120,50,0,0">
+                            <HyperlinkButton x:Name="hyperlinkButton" Content="https://errortek.vercel.app/" NavigateUri="https://errortek.vercel.app/" Padding="0,0,0,0" FontSize="11"/>
+                            <HyperlinkButton x:Name="hyperlinkButton2" Content="https://ivirius.vercel.app/" NavigateUri="https://ivirius.vercel.app/" Padding="0,0,0,0" FontSize="11"/>
+                        </StackPanel>
+                    </Grid>
+                    <muxc:NavigationView HorizontalAlignment="Left" Width="320" Height="Auto" SelectedItem="HomeNavItem" PaneDisplayMode="Left" x:Name="HomeNav" VerticalAlignment="Stretch" Margin="15,50,0,135" SelectionChanged="NavigationView_SelectionChanged" IsPaneToggleButtonVisible="False" IsBackButtonVisible="Collapsed">
+                        <muxc:NavigationView.MenuItems>
+                            <muxc:NavigationViewItem Icon="Home" Content="Home" Tag="HomeNavItem" x:Name="HomeNavItem"/>
+                            <muxc:NavigationViewItem Content="New" Icon="Document" x:Name="NewNavItem"/>
+                            <muxc:NavigationViewItemSeparator/>
+                            <muxc:NavigationViewItem Icon="OpenFile" Content="Open"/>
+                            <muxc:NavigationViewItem Icon="Save" Content="Save"/>
+                            <muxc:NavigationViewItem Icon="Share" Content="Share"/>
+                            <muxc:NavigationViewItem Icon="Delete" Content="Delete"/>
+                        </muxc:NavigationView.MenuItems>
+                        <muxc:NavigationView.FooterMenuItems>
+                            <muxc:NavigationViewItem Content="Account" Icon="Contact" x:Name="AccountNavItem"/>
+                        </muxc:NavigationView.FooterMenuItems>
+                    </muxc:NavigationView>
+                    <StackPanel Margin="350,60,25,160" Spacing="10" x:Name="HomePanel">
+                        <TextBlock Text="Hey there!" FontSize="36" FontWeight="SemiBold"/>
+                        <muxc:Expander Header="New File" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <ToolkitControls:WrapPanel HorizontalSpacing="10" VerticalSpacing="10">
+                                <Button Height="215" Click="InsertBlank" Width="185" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                    <Grid Width="180" Height="200" Margin="0,10,0,0">
+                                        <Border Background="White" Height="175" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Blank"/>
+                                    </Grid>
+                                </Button>
+                                <Button Height="215" Click="Button_Click_21" Width="185" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                    <Grid Width="180" Height="200" Margin="0,10,0,0">
+                                        <Border Background="White" Height="175" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                        <Image Source="/Assets/Templates/EssayTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Center" Height="150" Margin="0,10,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Essay"/>
+                                    </Grid>
+                                </Button>
+                                <Button Height="215" Click="Button_Click_22" Width="185" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                    <Grid Width="180" Height="200" Margin="0,10,0,0">
+                                        <Border Background="White" Height="175" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                        <Image Source="/Assets/Templates/ResumeTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Center" Height="150" Margin="0,10,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Résumé"/>
+                                    </Grid>
+                                </Button>
+                                <Button Height="215" Click="Button_Click_23" Width="185" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                    <Grid Width="180" Height="200" Margin="0,10,0,0">
+                                        <Border Background="White" Height="175" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                        <Image Source="/Assets/Templates/CreditsTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="148" HorizontalAlignment="Center" Height="150" Margin="0,10,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Credits"/>
+                                    </Grid>
+                                </Button>
+                            </ToolkitControls:WrapPanel>
+                        </muxc:Expander>
+                    </StackPanel>
+                    <StackPanel Margin="350,60,25,160" Spacing="10" x:Name="NewPanel" Visibility="Collapsed">
+                        <TextBlock Text="New File" FontSize="36" FontWeight="SemiBold"/>
+                        <ScrollViewer Margin="0, 75, 0, 0" VerticalScrollMode="Enabled">
+                            <StackPanel>
+                                <ToolkitControls:WrapPanel>
+                                    <Button Height="325" Click="InsertBlank" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Blank"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_21" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/EssayTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Essay"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_22" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/ResumeTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Résumé"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_23" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/CreditsTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Credits"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_24" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/ImageEssayTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Image Essay"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_25" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/ImageGalleryTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Image Gallery"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Height="325" Click="Button_Click_26" Width="250" Padding="0,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0">
+                                        <Grid Margin="0,10,0,0">
+                                            <Border Background="White" Height="250" Width="175" Margin="0,0,0,30" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="8"/>
+                                            <Image Source="/Assets/Templates/NewspaperTemp.png" Stretch="UniformToFill" VerticalAlignment="Top" Width="175" HorizontalAlignment="Center" Height="173" Margin="0,10,0,0"/>
+                                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,0,0,0" FontSize="14" Margin="10,0,0,2" Text="Newspaper"/>
+                                        </Grid>
+                                    </Button>
+                                </ToolkitControls:WrapPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <Grid x:Name="AccountsStackPanel" Margin="350,60,25,160" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Width="Auto">
+                            <TextBlock Text="Account" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <muxc:PersonPicture/>
+                                <TextBlock x:Name="UserText" Text="User" TextAlignment="Center" VerticalAlignment="Center" HorizontalTextAlignment="Center" FontSize="24" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Width="Auto">
+                            <TextBlock Text="About UltraTextEdit UWP Plus" Style="{ThemeResource BodyStrongTextBlockStyle}"/>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Image Height="150" Width="150" Source="/Assets/utevericon.png"/>
+                                <TextBlock Text="UTE UWP+" Style="{ThemeResource TitleLargeTextBlockStyle}" VerticalAlignment="Center" TextAlignment="Center">
+                                    <TextBlock.Foreground>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#FF4B5BB3"/>
+                                            <GradientStop Color="#FF65A7FF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Click="AboutItem_Click" Width="150">
+                                    <StackPanel Orientation="Vertical">
+                                        <IconSourceElement>
+                                            <SymbolIconSource Symbol="Help"/>
+                                        </IconSourceElement>
+                                        <TextBlock Text="About"/>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Build 26269.1"/>
+                                    <TextBlock Text="Dev Channel"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Click="ChangelogButton_Click" Width="150">
+                                    <StackPanel Orientation="Vertical">
+                                        <IconSourceElement>
+                                            <FontIconSource Glyph="&#xF0E3;"/>
+                                        </IconSourceElement>
+                                        <TextBlock Text="Changelog"/>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Find out what's new in this update" TextWrapping="WrapWholeWords"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Frame x:Name="SettingsFrame" Margin="350,60,25,160" Visibility="Collapsed"/>
+                </Grid>
+            </Border>
+        </Border>
+
     </Grid>
 </Page>

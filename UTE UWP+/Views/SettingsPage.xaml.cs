@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas.Text;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ namespace UTE_UWP_.Views
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
+        string RestartArgs;
+
 
         public ElementTheme ElementTheme
         {
@@ -49,65 +52,18 @@ namespace UTE_UWP_.Views
         public List<string> accentcolors = new List<string>
         {
             "Default",
-            //"Windows 10 Blue",
+            "Blue",
+            "Seafoam",
             "Slate Green",
+            "Crimson",
             "Lilac"
         };
 
         public SettingsPage()
         {
             InitializeComponent();
-            ((SystemAccentColorSetting)Application.Current.Resources["SystemAccentColorSetting"]).SystemAccentColor = new SolidColorBrush(Colors.Red);
-
-
-            if (BuildInfo.BeforeWin11)
-            {
-                if (App.Current.RequestedTheme == ApplicationTheme.Light)
-                {
-                    Application.Current.Resources["AppTitleBarBrush"] = new BackdropMicaBrush()
-                    {
-                        LuminosityOpacity = 0.8F,
-                        TintOpacity = 0F,
-                        BackgroundSource = BackgroundSource.WallpaperBackdrop,
-                        Opacity = 1,
-                        TintColor = Windows.UI.Color.FromArgb(255, 230, 230, 230),
-                        FallbackColor = Windows.UI.Color.FromArgb(255, 230, 230, 230)
-                    };
-                    this.Background = (Brush)Application.Current.Resources["AppTitleBarBrush"];
-                }
-                else
-                {
-                    Application.Current.Resources["AppTitleBarBrush"] = new BackdropMicaBrush()
-                    {
-                        LuminosityOpacity = 0.8F,
-                        TintOpacity = 0F,
-                        BackgroundSource = BackgroundSource.WallpaperBackdrop,
-                        Opacity = 1,
-                        TintColor = Windows.UI.Color.FromArgb(255, 25, 25, 25),
-                        FallbackColor = Windows.UI.Color.FromArgb(25, 25, 25, 25)
-                    };
-                    this.Background = (Brush)Application.Current.Resources["AppTitleBarBrush"];
-                }
-
-            }
-            else
-            {
-
-            }
-
-            var appViewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            appViewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            appViewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            UpdateTitleBarLayout(coreTitleBar);
-
-            Window.Current.SetTitleBar(AppTitleBar);
-
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+                
+            this.Background = new SolidColorBrush(Colors.Transparent);
 
             var LocalSettings = ApplicationData.Current.LocalSettings;
 
@@ -119,53 +75,54 @@ namespace UTE_UWP_.Views
             {
                 AccentBox.SelectedItem = "Lilac";
             }
+            if ((string)LocalSettings.Values["AccentTheme"] == "Crimson")
+            {
+                AccentBox.SelectedItem = "Crimson";
+            }
+            if ((string)LocalSettings.Values["AccentTheme"] == "Seafoam")
+            {
+                AccentBox.SelectedItem = "Seafoam";
+            }
+            if ((string)LocalSettings.Values["AccentTheme"] == "Blue")
+            {
+                AccentBox.SelectedItem = "Blue";
+            }
             if ((string)LocalSettings.Values["AccentTheme"] == "Default")
             {
                 AccentBox.SelectedItem = "Default";
             }
-        }
 
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            UpdateTitleBarLayout(sender);
-        }
 
-        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            AppTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        // Update the TitleBar based on the inactive/active state of the app
-        private void Current_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            SolidColorBrush defaultForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
-            SolidColorBrush inactiveForegroundBrush = (SolidColorBrush)Application.Current.Resources["TextFillColorDisabledBrush"];
-
-            if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
+            if ((string)LocalSettings.Values["TextWrapping"] == "No wrap")
             {
-                AppTitle.Foreground = inactiveForegroundBrush;
+                TextWrapComboBox.SelectedItem = "No wrap";
+            }
+            if ((string)LocalSettings.Values["TextWrapping"] == "Wrap")
+            {
+                TextWrapComboBox.SelectedItem = "Wrap";
+            }
+            if ((string)LocalSettings.Values["TextWrapping"] == "Wrap whole words")
+            {
+                TextWrapComboBox.SelectedItem = "Wrap whole words";
+            }
+
+
+            if (LocalSettings.Values["SpellCheck"] != null)
+            {
+                if ((string)LocalSettings.Values["SpellCheck"] == "On")
+                {
+                    spellcheckBox.IsChecked = true;
+
+                }
+                if ((string)LocalSettings.Values["SpellCheck"] == "Off")
+                {
+                    spellcheckBox.IsChecked = false;
+                }
             }
             else
             {
-                AppTitle.Foreground = defaultForegroundBrush;
-            }
-        }
-
-        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
-        {
-            // Update title bar control size as needed to account for system size changes.
-            AppTitleBar.Height = coreTitleBar.Height;
-
-            // Ensure the custom title bar does not overlap window caption controls
-            Thickness currMargin = AppTitleBar.Margin;
-            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Window.Current.Content is Frame rootFrame && rootFrame.CanGoBack)
-            {
-                rootFrame.GoBack();
+                LocalSettings.Values["SpellCheck"] = "Off";
+                spellcheckBox.IsChecked = false;
             }
         }
 
@@ -286,8 +243,130 @@ namespace UTE_UWP_.Views
                 {
                     LocalSettings.Values["AccentTheme"] = "Lilac";
                 }
+                else if ((string)AccentBox.SelectedItem == "Seafoam")
+                {
+                    LocalSettings.Values["AccentTheme"] = "Seafoam";
+                }
+                else if ((string)AccentBox.SelectedItem == "Blue")
+                {
+                    LocalSettings.Values["AccentTheme"] = "Blue";
+                }
+                else if ((string)AccentBox.SelectedItem == "Crimson")
+                {
+                    LocalSettings.Values["AccentTheme"] = "Crimson";
+                }
             }   
         }
-    }
 
+        private void spellcheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var LocalSettings = ApplicationData.Current.LocalSettings;
+            if (LocalSettings.Values["SpellCheck"] != null)
+            {
+                LocalSettings.Values["SpellCheck"] = "On";
+            }
+        }
+
+        private void spellcheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var LocalSettings = ApplicationData.Current.LocalSettings;
+            if (LocalSettings.Values["SpellCheck"] != null)
+            {
+                LocalSettings.Values["SpellCheck"] = "Off";
+            }
+        }
+
+        private void TextWrapComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var LocalSettings = ApplicationData.Current.LocalSettings;
+            if (TextWrapComboBox.SelectedItem != null) {
+                if (LocalSettings.Values["TextWrapping"] != null)
+                {
+                    LocalSettings.Values["TextWrapping"] = TextWrapComboBox.SelectedItem.ToString();
+                } else
+                {
+                    LocalSettings.Values["TextWrapping"] = "No wrap";
+                }
+            }
+        }
+
+        private async void SettingsResetButton_Click(object Sender, RoutedEventArgs EvArgs)
+        {
+            RestartArgs = "e";
+            ApplicationDataContainer LS = ApplicationData.Current.LocalSettings;
+            foreach (KeyValuePair<string, object> item in LS.Values.ToList())
+            {
+                LS.Values.Remove(item.Key);
+            }
+            await CoreApplication.RequestRestartAsync(RestartArgs);
+        }
+
+        private async void SettingsSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ThemeBox != null)
+            {
+                if (ThemeBox.SelectedIndex == 0)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Mica Light");
+                    SettingsHelper.SetSetting("Core.UI", "WinUI");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "High Visibility");
+                }
+                if (ThemeBox.SelectedIndex == 1)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Mica Dark");
+                    SettingsHelper.SetSetting("Core.UI", "WinUI");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "High Visibility");
+                }
+                if (ThemeBox.SelectedIndex == 2)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Mica Light");
+                    SettingsHelper.SetSetting("Core.UI", "CrimsonUI");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "Reveal Focus");
+                }
+                if (ThemeBox.SelectedIndex == 3)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Mica Dark");
+                    SettingsHelper.SetSetting("Core.UI", "CrimsonUI");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "Reveal Focus");
+                }
+                if (ThemeBox.SelectedIndex == 4)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Win32 Light");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "DottedLine");
+                }
+                if (ThemeBox.SelectedIndex == 5)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Win32 Dark");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "DottedLine");
+                }
+                if (ThemeBox.SelectedIndex == 6)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Acrylic Glass");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "DottedLine");
+                }
+                if (ThemeBox.SelectedIndex == 7)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Luna");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "DottedLine");
+                }
+                if (ThemeBox.SelectedIndex == 8)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "Win32 Legacy");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "DottedLine");
+                }
+                if (ThemeBox.SelectedIndex == 9)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "10 Light");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "High Visibility");
+                }
+                if (ThemeBox.SelectedIndex == 10)
+                {
+                    SettingsHelper.SetSetting("Core.Theme", "10 Dark");
+                    SettingsHelper.SetSetting("Core.FocusVisualKind", "High Visibility");
+                }
+            }
+            RestartArgs = "e";
+            await CoreApplication.RequestRestartAsync(RestartArgs);
+        }
+    }
 }
